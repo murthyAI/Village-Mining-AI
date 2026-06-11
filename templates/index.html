@@ -12,7 +12,7 @@
         .tab-content.active { display: block; }
     </style>
 </head>
-<body class="text-white min-h-screen flex flex-col justify-between select-none">
+<body class="text-white min-h-screen flex flex-col justify-between select-none pb-20">
 
     <div class="p-4 w-full max-w-md mx-auto">
         <div class="bg-emerald-950/60 border border-emerald-500/30 rounded-2xl p-3 flex justify-between items-center mb-4 backdrop-blur-sm">
@@ -29,92 +29,92 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-2 text-center text-xs mb-4">
+        <div class="grid grid-cols-3 gap-2 text-center text-xs mb-2">
             <div class="bg-emerald-900/40 border border-emerald-500/20 rounded-xl p-2">
-                <p class="text-gray-400 text-[10px]">PROFIT / HOUR</p>
-                <p class="font-bold text-amber-400">⚡ +900</p>
+                <p class="text-gray-400 text-[9px]">PROFIT / HOUR</p>
+                <p class="font-bold text-emerald-400 text-xs">⚡ +900</p>
             </div>
             <div class="bg-emerald-900/40 border border-emerald-500/20 rounded-xl p-2">
-                <p class="text-gray-400 text-[10px]">TOTAL TIERS</p>
-                <p class="font-bold text-amber-400">⭐ 10 LEVELS</p>
+                <p class="text-gray-400 text-[9px]">TOTAL TIERS</p>
+                <p class="font-bold text-amber-400 text-xs">⭐ 10 LVL</p>
             </div>
             <div class="bg-emerald-900/40 border border-emerald-500/20 rounded-xl p-2">
-                <p class="text-gray-400 text-[10px]">SKIN BOOST</p>
-                <p class="font-bold text-amber-400">x4</p>
+                <p class="text-gray-400 text-[9px]">SKIN BOOST</p>
+                <p class="font-bold text-green-400 text-xs">x4</p>
             </div>
         </div>
     </div>
 
-    <div class="flex-grow w-full max-w-md mx-auto px-4 overflow-y-auto pb-24">
+    <div class="flex-grow w-full max-w-md mx-auto px-4 overflow-y-auto mb-4">
         
-        <div id="tap-page" class="tab-content active text-center flex flex-col items-center justify-center pt-4">
-            <div class="flex items-center justify-center gap-2 mb-6">
-                <span class="text-3xl text-amber-400 animate-pulse">🪙</span>
+        <div id="tap-page" class="tab-content active text-center flex flex-col items-center justify-center">
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <span class="text-2xl text-amber-400 animate-pulse">🪙</span>
                 <span id="coin-balance" class="text-4xl font-black text-amber-400 tracking-wide">1,657,565</span>
             </div>
 
-            <div class="w-full bg-emerald-950/80 border border-emerald-800/40 rounded-full h-4 mb-8 relative overflow-hidden">
-                <div class="bg-gradient-to-r from-emerald-500 to-green-400 h-full w-[25%] rounded-full transition-all duration-300"></div>
+            <div class="w-full bg-emerald-950/80 border border-emerald-800/40 rounded-full h-5 mb-6 relative overflow-hidden">
+                <div class="bg-gradient-to-r from-emerald-500 to-green-400 h-full w-[25%] rounded-full"></div>
                 <span class="absolute inset-0 flex items-center justify-between px-3 text-[9px] font-bold">
                     <span>RANK METRIC</span>
-                    <span>🚜 NEXT TARGET: 3,342,435 POINTS</span>
+                    <span>🚜 TARGET: 3.3M POINTS</span>
                 </span>
             </div>
 
-            <div class="relative my-4">
-                <button id="tap-btn" class="w-64 h-64 bg-gradient-to-b from-emerald-600 to-emerald-900 rounded-full border-4 border-emerald-400 flex items-center justify-center neon-glow active:scale-95 transition-transform duration-75 focus:outline-none">
-                    <span class="text-8xl filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">🚜</span>
+            <div class="flex justify-center items-center my-2 w-full">
+                <button id="tap-btn" class="w-56 h-56 bg-gradient-to-b from-emerald-600 to-emerald-900 rounded-full border-4 border-emerald-400 flex items-center justify-center neon-glow active:scale-95 transition-transform duration-75 focus:outline-none mx-auto">
+                    <span class="text-7xl filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">🚜</span>
                 </button>
             </div>
-            <p class="text-xs font-bold text-emerald-400 tracking-widest mt-4">✨ TAP TRACTOR TO GET COINS ✨</p>
+            <p class="text-[10px] font-bold text-emerald-400 tracking-widest mt-3">✨ TAP TRACTOR TO EARN ✨</p>
 
-            <div class="mt-6 inline-flex items-center gap-2 bg-emerald-950/80 border border-emerald-500/30 px-4 py-1.5 rounded-full text-xs">
+            <div class="mt-4 inline-flex items-center gap-2 bg-emerald-950/80 border border-emerald-500/30 px-4 py-1 rounded-full text-xs">
                 <span>⚡ ENERGY:</span>
                 <span id="energy-counter" class="font-bold text-emerald-400">450 / 500</span>
             </div>
         </div>
 
-        <div id="mine-page" class="tab-content text-center pt-4">
-            <h3 class="text-xl font-bold text-emerald-400 mb-2">🚜 Village Mining Market</h3>
-            <p class="text-xs text-gray-400 mb-4">Upgrade your equipment to boost your hourly rewards</p>
+        <div id="mine-page" class="tab-content text-center">
+            <h3 class="text-lg font-bold text-emerald-400 mb-1">🚜 Village Mining Market</h3>
+            <p class="text-[11px] text-gray-400 mb-4">Upgrade your equipment to boost rewards</p>
             <div class="space-y-3 text-left">
                 <div class="bg-emerald-950/60 border border-emerald-500/20 p-3 rounded-xl flex justify-between items-center">
                     <div>
                         <h4 class="font-bold text-sm">John Deere Neon V1</h4>
-                        <p class="text-xs text-gray-400">+100 coins / hour</p>
+                        <p class="text-xs text-emerald-400">+100 coins / hour</p>
                     </div>
-                    <button class="bg-emerald-500 text-black font-bold text-xs px-3 py-1.5 rounded-lg">Buy 50K</button>
+                    <button onclick="alert('Item Upgraded Successfully!')" class="bg-emerald-500 text-black font-black text-xs px-4 py-2 rounded-lg">Buy 50K</button>
                 </div>
                 <div class="bg-emerald-950/60 border border-emerald-500/20 p-3 rounded-xl flex justify-between items-center">
                     <div>
                         <h4 class="font-bold text-sm">Solar Pump Station</h4>
-                        <p class="text-xs text-gray-400">+250 coins / hour</p>
+                        <p class="text-xs text-emerald-400">+250 coins / hour</p>
                     </div>
-                    <button class="bg-emerald-500 text-black font-bold text-xs px-3 py-1.5 rounded-lg">Buy 120K</button>
+                    <button onclick="alert('Item Upgraded Successfully!')" class="bg-emerald-500 text-black font-black text-xs px-4 py-2 rounded-lg">Buy 120K</button>
                 </div>
             </div>
         </div>
 
-        <div id="tasks-page" class="tab-content text-center pt-4">
-            <h3 class="text-xl font-bold text-emerald-400 mb-2">📋 Bonus Missions</h3>
-            <p class="text-xs text-gray-400 mb-4">Complete simple missions to get huge rewards</p>
+        <div id="tasks-page" class="tab-content text-center">
+            <h3 class="text-lg font-bold text-emerald-400 mb-1">📋 Bonus Missions</h3>
+            <p class="text-[11px] text-gray-400 mb-4">Complete missions to get instant coins</p>
             <div class="space-y-3 text-left">
                 <div class="bg-emerald-950/60 border border-emerald-500/20 p-3 rounded-xl flex justify-between items-center">
                     <p class="text-xs font-semibold">Join Our Telegram Channel</p>
-                    <button class="bg-amber-400 text-black font-bold text-xs px-3 py-1.5 rounded-lg">+100,000 🪙</button>
+                    <button onclick="alert('Reward Claimed: +100,000 Coins!')" class="bg-amber-400 text-black font-black text-xs px-3 py-2 rounded-lg">+100,000 🪙</button>
                 </div>
                 <div class="bg-emerald-950/60 border border-emerald-500/20 p-3 rounded-xl flex justify-between items-center">
                     <p class="text-xs font-semibold">Follow Cyber Zamindar on X</p>
-                    <button class="bg-amber-400 text-black font-bold text-xs px-3 py-1.5 rounded-lg">+50,000 🪙</button>
+                    <button onclick="alert('Reward Claimed: +50,000 Coins!')" class="bg-amber-400 text-black font-black text-xs px-3 py-2 rounded-lg">+50,000 🪙</button>
                 </div>
             </div>
         </div>
 
-        <div id="wallet-page" class="tab-content text-center pt-8">
-            <span class="text-6xl block mb-3">💎</span>
-            <h3 class="text-xl font-bold text-emerald-400 mb-2">Web3 Airdrop Wallet</h3>
-            <p class="text-xs text-gray-400 max-w-xs mx-auto mb-6">Connect your decentralized crypto wallet to claim token distribution rewards after the global launch.</p>
-            <button class="w-full bg-gradient-to-r from-emerald-500 to-green-500 text-black font-black py-3 rounded-xl shadow-lg shadow-emerald-500/20">Connect Wallet</button>
+        <div id="wallet-page" class="tab-content text-center pt-4">
+            <span class="text-5xl block mb-2">💎</span>
+            <h3 class="text-lg font-bold text-emerald-400 mb-1">Web3 Airdrop Wallet</h3>
+            <p class="text-xs text-gray-400 max-w-xs mx-auto mb-4">Connect your decentralized crypto wallet to claim rewards after launch.</p>
+            <button onclick="alert('Crypto Wallet Integration coming soon on Phase 2!')" class="w-full bg-gradient-to-r from-emerald-500 to-green-500 text-black font-black py-3 rounded-xl shadow-lg">Connect Wallet</button>
         </div>
 
     </div>
@@ -133,13 +133,6 @@
             <button onclick="switchTab('wallet-page')" class="nav-tab flex flex-col items-center gap-1 hover:text-white">
                 <span class="text-lg">💰</span><span>Wallet</span>
             </button>
-        </div>
-    </div>
-
-    <div class="fixed bottom-16 left-0 right-0 px-4 z-40 max-w-md mx-auto">
-        <div class="bg-gradient-to-r from-amber-950/80 to-emerald-950/80 border border-amber-500/40 rounded-xl p-2 text-center text-[10px] backdrop-blur-sm">
-            <span class="font-bold text-amber-400">💰 SPONSORED PROMO AD ZONE (CLICK TO EARN) 💰</span>
-            <p class="text-gray-300 mt-0.5">🌾 Upgrade Your Crop Yields with Village Mining AI Partners! 🌾</p>
         </div>
     </div>
 
