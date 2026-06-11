@@ -9,10 +9,10 @@
         body { background-color: #041a0b; font-family: sans-serif; }
         .neon-glow { box-shadow: 0 0 20px #10b981; }
         .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tab-content.active { display: flex; flex-direction: column; align-items: center; }
     </style>
 </head>
-<body class="text-white min-h-screen flex flex-col justify-between select-none pb-20">
+<body class="text-white min-h-screen flex flex-col justify-between select-none pb-36">
 
     <div class="p-4 w-full max-w-md mx-auto">
         <div class="bg-emerald-950/60 border border-emerald-500/30 rounded-2xl p-3 flex justify-between items-center mb-4 backdrop-blur-sm">
@@ -32,7 +32,7 @@
         <div class="grid grid-cols-3 gap-2 text-center text-xs mb-2">
             <div class="bg-emerald-900/40 border border-emerald-500/20 rounded-xl p-2">
                 <p class="text-gray-400 text-[9px]">PROFIT / HOUR</p>
-                <p class="font-bold text-emerald-400 text-xs">⚡ +900</p>
+                <p id="profit-hour" class="font-bold text-emerald-400 text-xs">⚡ +900</p>
             </div>
             <div class="bg-emerald-900/40 border border-emerald-500/20 rounded-xl p-2">
                 <p class="text-gray-400 text-[9px]">TOTAL TIERS</p>
@@ -47,76 +47,83 @@
 
     <div class="flex-grow w-full max-w-md mx-auto px-4 overflow-y-auto mb-4">
         
-        <div id="tap-page" class="tab-content active text-center flex flex-col items-center justify-center">
+        <div id="tap-page" class="tab-content active text-center pt-4">
             <div class="flex items-center justify-center gap-2 mb-4">
                 <span class="text-2xl text-amber-400 animate-pulse">🪙</span>
                 <span id="coin-balance" class="text-4xl font-black text-amber-400 tracking-wide">1,657,565</span>
             </div>
 
             <div class="w-full bg-emerald-950/80 border border-emerald-800/40 rounded-full h-5 mb-6 relative overflow-hidden">
-                <div class="bg-gradient-to-r from-emerald-500 to-green-400 h-full w-[25%] rounded-full"></div>
+                <div id="rank-bar" class="bg-gradient-to-r from-emerald-500 to-green-400 h-full w-[49%] transition-all duration-300"></div>
                 <span class="absolute inset-0 flex items-center justify-between px-3 text-[9px] font-bold">
                     <span>RANK METRIC</span>
-                    <span>🚜 TARGET: 3.3M POINTS</span>
+                    <span id="target-text">🚜 TARGET: 3.3M POINTS</span>
                 </span>
             </div>
 
-            <div class="flex justify-center items-center my-2 w-full">
-                <button id="tap-btn" class="w-56 h-56 bg-gradient-to-b from-emerald-600 to-emerald-900 rounded-full border-4 border-emerald-400 flex items-center justify-center neon-glow active:scale-95 transition-transform duration-75 focus:outline-none mx-auto">
+            <div class="flex justify-center items-center my-4 w-full">
+                <button id="tap-btn" class="w-56 h-56 bg-gradient-to-b from-emerald-600 to-emerald-900 rounded-full border-4 border-emerald-400 flex items-center justify-center neon-glow active:scale-95 transition-transform duration-75 focus:outline-none">
                     <span class="text-7xl filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">🚜</span>
                 </button>
             </div>
-            <p class="text-[10px] font-bold text-emerald-400 tracking-widest mt-3">✨ TAP TRACTOR TO EARN ✨</p>
+            <p class="text-[10px] font-bold text-emerald-400 tracking-widest mt-2">✨ TAP TRACTOR TO EARN ✨</p>
 
             <div class="mt-4 inline-flex items-center gap-2 bg-emerald-950/80 border border-emerald-500/30 px-4 py-1 rounded-full text-xs">
                 <span>⚡ ENERGY:</span>
-                <span id="energy-counter" class="font-bold text-emerald-400">450 / 500</span>
+                <span id="energy-counter" class="font-bold text-emerald-400">500 / 500</span>
             </div>
         </div>
 
-        <div id="mine-page" class="tab-content text-center">
+        <div id="mine-page" class="tab-content text-center pt-4 w-full">
             <h3 class="text-lg font-bold text-emerald-400 mb-1">🚜 Village Mining Market</h3>
-            <p class="text-[11px] text-gray-400 mb-4">Upgrade your equipment to boost rewards</p>
-            <div class="space-y-3 text-left">
+            <p class="text-[11px] text-gray-400 mb-4">Upgrade equipment to boost auto-rewards</p>
+            <div class="space-y-3 text-left w-full">
                 <div class="bg-emerald-950/60 border border-emerald-500/20 p-3 rounded-xl flex justify-between items-center">
                     <div>
                         <h4 class="font-bold text-sm">John Deere Neon V1</h4>
                         <p class="text-xs text-emerald-400">+100 coins / hour</p>
                     </div>
-                    <button onclick="alert('Item Upgraded Successfully!')" class="bg-emerald-500 text-black font-black text-xs px-4 py-2 rounded-lg">Buy 50K</button>
+                    <button onclick="buyUpgrade(50000, 100)" class="bg-emerald-500 text-black font-black text-xs px-4 py-2 rounded-lg active:scale-95 transition-transform">Buy 50K</button>
                 </div>
                 <div class="bg-emerald-950/60 border border-emerald-500/20 p-3 rounded-xl flex justify-between items-center">
                     <div>
                         <h4 class="font-bold text-sm">Solar Pump Station</h4>
                         <p class="text-xs text-emerald-400">+250 coins / hour</p>
                     </div>
-                    <button onclick="alert('Item Upgraded Successfully!')" class="bg-emerald-500 text-black font-black text-xs px-4 py-2 rounded-lg">Buy 120K</button>
+                    <button onclick="buyUpgrade(120000, 250)" class="bg-emerald-500 text-black font-black text-xs px-4 py-2 rounded-lg active:scale-95 transition-transform">Buy 120K</button>
                 </div>
             </div>
         </div>
 
-        <div id="tasks-page" class="tab-content text-center">
+        <div id="tasks-page" class="tab-content text-center pt-4 w-full">
             <h3 class="text-lg font-bold text-emerald-400 mb-1">📋 Bonus Missions</h3>
             <p class="text-[11px] text-gray-400 mb-4">Complete missions to get instant coins</p>
-            <div class="space-y-3 text-left">
+            <div class="space-y-3 text-left w-full">
                 <div class="bg-emerald-950/60 border border-emerald-500/20 p-3 rounded-xl flex justify-between items-center">
                     <p class="text-xs font-semibold">Join Our Telegram Channel</p>
-                    <button onclick="alert('Reward Claimed: +100,000 Coins!')" class="bg-amber-400 text-black font-black text-xs px-3 py-2 rounded-lg">+100,000 🪙</button>
+                    <button id="task1-btn" onclick="completeTask('task1-btn', 100000)" class="bg-amber-400 text-black font-black text-xs px-3 py-2 rounded-lg active:scale-95 transition-transform">+100,000 🪙</button>
                 </div>
                 <div class="bg-emerald-950/60 border border-emerald-500/20 p-3 rounded-xl flex justify-between items-center">
                     <p class="text-xs font-semibold">Follow Cyber Zamindar on X</p>
-                    <button onclick="alert('Reward Claimed: +50,000 Coins!')" class="bg-amber-400 text-black font-black text-xs px-3 py-2 rounded-lg">+50,000 🪙</button>
+                    <button id="task2-btn" onclick="completeTask('task2-btn', 50000)" class="bg-amber-400 text-black font-black text-xs px-3 py-2 rounded-lg active:scale-95 transition-transform">+50,000 🪙</button>
                 </div>
             </div>
         </div>
 
-        <div id="wallet-page" class="tab-content text-center pt-4">
+        <div id="wallet-page" class="tab-content text-center pt-4 w-full">
             <span class="text-5xl block mb-2">💎</span>
             <h3 class="text-lg font-bold text-emerald-400 mb-1">Web3 Airdrop Wallet</h3>
-            <p class="text-xs text-gray-400 max-w-xs mx-auto mb-4">Connect your decentralized crypto wallet to claim rewards after launch.</p>
-            <button onclick="alert('Crypto Wallet Integration coming soon on Phase 2!')" class="w-full bg-gradient-to-r from-emerald-500 to-green-500 text-black font-black py-3 rounded-xl shadow-lg">Connect Wallet</button>
+            <p class="text-xs text-gray-400 max-w-xs mx-auto mb-4">Connect decentralized wallet to claim launch distribution rewards.</p>
+            <button onclick="connectWallet()" class="w-full bg-gradient-to-r from-emerald-500 to-green-500 text-black font-black py-3 rounded-xl shadow-lg active:scale-95 transition-transform">Connect Wallet</button>
         </div>
 
+    </div>
+
+    <div class="fixed bottom-16 left-0 right-0 px-4 z-40 max-w-md mx-auto">
+        <div onclick="watchAdBonus()" class="bg-gradient-to-r from-amber-950 to-emerald-950 border border-amber-500/50 rounded-xl p-2.5 text-center text-[10px] backdrop-blur-sm cursor-pointer hover:border-amber-400 transition-colors">
+            <span class="font-bold text-amber-400 tracking-wide block animate-bounce">💰 SPONSORED PREMIUM AD ZONE (CLICK TO EARN +25,000) 💰</span>
+            <p class="text-gray-300 mt-0.5">🌾 Watch Partner Ads & Boost Global Crop Yield Distributions instantly! 🌾</p>
+        </div>
     </div>
 
     <div class="fixed bottom-0 left-0 right-0 bg-emerald-950/95 border-t border-emerald-500/30 backdrop-blur-md py-2 z-50">
@@ -138,30 +145,88 @@
 
     <script>
         let balance = 1657565;
-        let energy = 450;
+        let energy = 500;
+        let profitPerHour = 900;
 
-        // Tap Logic
+        // 1. Tap Mechanical Logic
         document.getElementById('tap-btn').addEventListener('click', () => {
             if (energy > 0) {
                 balance += 4;
                 energy -= 1;
-                document.getElementById('coin-balance').innerText = balance.toLocaleString();
-                document.getElementById('energy-counter').innerText = energy + " / 500";
+                updateUI();
+            } else {
+                alert("Out of Energy! Wait for it to charge.");
             }
         });
 
-        // Tab Switch Logic
+        // 2. Buy Upgrades (Mine Page Logic)
+        function buyUpgrade(cost, profitIncrease) {
+            if (balance >= cost) {
+                balance -= cost;
+                profitPerHour += profitIncrease;
+                document.getElementById('profit-hour').innerText = "⚡ +" + profitPerHour;
+                updateUI();
+                alert("Upgrade Successful! Profit/Hour increased.");
+            } else {
+                alert("Not enough coins for this upgrade!");
+            }
+        }
+
+        // 3. Quest Mission Rewards (Tasks Page Logic)
+        function completeTask(btnId, reward) {
+            let btn = document.getElementById(btnId);
+            if (!btn.disabled) {
+                balance += reward;
+                btn.innerText = "✅ Claimed";
+                btn.className = "bg-gray-600 text-gray-400 text-xs px-3 py-2 rounded-lg cursor-not-allowed";
+                btn.disabled = true;
+                updateUI();
+                alert("Mission Complete! " + reward.toLocaleString() + " Coins Added.");
+            }
+        }
+
+        // 4. Click-to-Earn Ad Feature
+        function watchAdBonus() {
+            alert("Loading Partner Ad Sponsored Content...");
+            setTimeout(() => {
+                balance += 25000;
+                updateUI();
+                alert("Ad Verified! +25,000 Coins Reward added successfully.");
+            }, 1000);
+        }
+
+        // 5. Wallet Integration
+        function connectWallet() {
+            alert("Connecting with TON/Web3 Ecosystem Provider... Wallet function active for Phase 2 Deployment!");
+        }
+
+        // UI Live Syncer
+        function updateUI() {
+            document.getElementById('coin-balance').innerText = balance.toLocaleString();
+            document.getElementById('energy-counter').innerText = energy + " / 500";
+            
+            // Sync progress bar smoothly
+            let target = 3342435;
+            let percentage = Math.min((balance / target) * 100, 100);
+            document.getElementById('rank-bar').style.width = percentage + "%";
+        }
+
+        // Tab Navigation Architecture
         function switchTab(pageId) {
-            // Hide all pages
             document.querySelectorAll('.tab-content').forEach(page => page.classList.remove('active'));
-            // Show selected page
             document.getElementById(pageId).classList.add('active');
             
-            // Reset tab button highlights
             document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('text-emerald-400'));
-            // Highlight active tab
             event.currentTarget.classList.add('text-emerald-400');
         }
+
+        // Passive Auto Recovery Energy Module
+        setInterval(() => {
+            if (energy < 500) {
+                energy += 1;
+                document.getElementById('energy-counter').innerText = energy + " / 500";
+            }
+        }, 3000);
     </script>
 </body>
 </html>
