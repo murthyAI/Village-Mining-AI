@@ -14,7 +14,7 @@
         .app-container { z-index: 10; position: relative; }
         @keyframes shake {
             0%, 100% { transform: rotate(0deg); }
-            20%, 60 sign { transform: rotate(-8deg); }
+            20%, 60% { transform: rotate(-8deg); }
             40%, 80% { transform: rotate(8deg); }
         }
         .box-shake { animation: shake 0.6s ease-in-out infinite alternate; }
@@ -49,7 +49,7 @@
             <div class="grid grid-cols-3 gap-2 text-center text-xs mb-2">
                 <div class="bg-emerald-900/50 border border-emerald-500/30 rounded-xl p-2 backdrop-blur-sm">
                     <p class="text-gray-400 text-[9px]">PROFIT / HOUR</p>
-                    <p id="profit-hour" class="font-bold text-emerald-400 text-xs">⚡ +900</p>
+                    <p id="profit-hour" class="font-bold text-emerald-400 text-xs">⚡ +1950</p>
                 </div>
                 <div class="bg-emerald-900/50 border border-emerald-500/30 rounded-xl p-2 backdrop-blur-sm">
                     <p class="text-gray-400 text-[9px]">TOTAL TIERS</p>
@@ -67,15 +67,16 @@
             <div id="tap-page" class="tab-content active text-center pt-1">
                 
                 <div class="w-full bg-emerald-950/80 border border-emerald-500/40 p-2 rounded-xl mb-3 backdrop-blur-sm">
-                    <p class="text-[10px] font-bold text-amber-400 mb-1.5 flex items-center justify-center gap-1">📅 DAILY STREAK CLAIM SYSTEM</p>
+                    <p class="text-[10px] font-bold text-amber-400 mb-1 flex items-center justify-center gap-1">📅 DAILY STREAK SYSTEMS (LOCKED TO 24H)</p>
+                    <p id="streak-timer-text" class="text-[9px] text-gray-400 mb-1.5 font-semibold"></p>
                     <div class="grid grid-cols-7 gap-1 text-[9px]">
                         <button id="streak-1" onclick="claimStreak(1, 10000)" class="bg-emerald-800 text-white font-bold p-1 rounded">D1<br>+10K</button>
-                        <button id="streak-2" onclick="claimStreak(2, 20000)" class="bg-emerald-900/40 border border-emerald-700/50 p-1 rounded text-gray-400" disabled>D2<br>+20K</button>
-                        <button id="streak-3" onclick="claimStreak(3, 30000)" class="bg-emerald-900/40 border border-emerald-700/50 p-1 rounded text-gray-400" disabled>D3<br>+30K</button>
-                        <button id="streak-4" onclick="claimStreak(4, 40000)" class="bg-emerald-900/40 border border-emerald-700/50 p-1 rounded text-gray-400" disabled>D4<br>+40K</button>
-                        <button id="streak-5" onclick="claimStreak(5, 50000)" class="bg-emerald-900/40 border border-emerald-700/50 p-1 rounded text-gray-400" disabled>D5<br>+50K</button>
-                        <button id="streak-6" onclick="claimStreak(6, 80000)" class="bg-emerald-900/40 border border-emerald-700/50 p-1 rounded text-gray-400" disabled>D6<br>+80K</button>
-                        <button id="streak-7" onclick="claimStreak(7, 150000)" class="bg-emerald-900/40 border border-purple-700/50 p-1 rounded text-purple-400" disabled>D7<br>+150K</button>
+                        <button id="streak-2" onclick="claimStreak(2, 20000)" class="bg-gray-800 text-gray-600 p-1 rounded" disabled>D2<br>+20K</button>
+                        <button id="streak-3" onclick="claimStreak(3, 30000)" class="bg-gray-800 text-gray-600 p-1 rounded" disabled>D3<br>+30K</button>
+                        <button id="streak-4" onclick="claimStreak(4, 40000)" class="bg-gray-800 text-gray-600 p-1 rounded" disabled>D4<br>+40K</button>
+                        <button id="streak-5" onclick="claimStreak(5, 50000)" class="bg-gray-800 text-gray-600 p-1 rounded" disabled>D5<br>+50K</button>
+                        <button id="streak-6" onclick="claimStreak(6, 80000)" class="bg-gray-800 text-gray-600 p-1 rounded" disabled>D6<br>+80K</button>
+                        <button id="streak-7" onclick="claimStreak(7, 150000)" class="bg-gray-800 text-gray-600 p-1 rounded" disabled>D7<br>+150K</button>
                     </div>
                 </div>
 
@@ -160,10 +161,10 @@
                 
                 <div id="wallet-providers" class="hidden mt-6 w-full space-y-2 bg-emerald-950/50 p-3 rounded-xl border border-emerald-800/40">
                     <p class="text-[10px] text-emerald-400 font-bold tracking-wider mb-2">CHOOSE TON PROVIDER</p>
-                    <div onclick="mockConnect('TON Keeper')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center gap-3 cursor-pointer hover:bg-emerald-800">
+                    <div onclick="mockConnect('Tonkeeper')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center gap-3 cursor-pointer hover:bg-emerald-800">
                         <span>💎</span><span class="text-xs font-bold">Tonkeeper Wallet</span>
                     </div>
-                    <div onclick="mockConnect('Telegram Space')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center gap-3 cursor-pointer hover:bg-emerald-800">
+                    <div onclick="mockConnect('Telegram Wallet')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center gap-3 cursor-pointer hover:bg-emerald-800">
                         <span>✈️</span><span class="text-xs font-bold">Telegram Wallet (🔥 Recommended)</span>
                     </div>
                     <div onclick="mockConnect('MyTonWallet')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center gap-3 cursor-pointer hover:bg-emerald-800">
@@ -201,12 +202,15 @@
     </div>
 
     <script>
-        let balance = 1692645;
+        let balance = 1657565;
         let energy = 500;
-        let profitPerHour = 1500;
+        let profitPerHour = 1950;
         let mysteryBoxClaimed = false;
         let adCooldownActive = false;
-        let currentStreakDay = 1;
+
+        // SECURE STREAK STATE RETRIEVAL
+        let currentStreakDay = parseInt(localStorage.getItem('v_streak_day')) || 1;
+        let lastClaimTime = parseInt(localStorage.getItem('v_last_claim_time')) || 0;
 
         // CANVAS BACKGROUND FLOATING BUBBLES LOGIC
         const canvas = document.getElementById('bubble-canvas');
@@ -231,29 +235,104 @@
         function animateCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); particlesArray[i].draw(); } requestAnimationFrame(animateCanvas); }
         animateCanvas();
 
-        // 1. Tapping Module
+        // On Load initialization
+        window.onload = function() {
+            setupStreakUI();
+            setInterval(checkStreakTimer, 1000);
+        };
+
+        // Tapping Module
         document.getElementById('tap-btn').addEventListener('click', () => { if (energy > 0) { balance += 4; energy -= 1; updateUI(); } });
 
-        // 2. Daily Streak Verification System
+        // SECURE ANTI-CHEAT DAILY STREAK LOGIC
+        function setupStreakUI() {
+            const now = Date.now();
+            const timePassed = now - lastClaimTime;
+            const cooldown = 24 * 60 * 60 * 1000; // 24 Hours Lock
+
+            // Render all previous days as completed
+            for (let i = 1; i < currentStreakDay; i++) {
+                let btn = document.getElementById(`streak-${i}`);
+                if (btn) {
+                    btn.className = "bg-gray-700 text-gray-500 font-bold p-1 rounded cursor-not-allowed line-through";
+                    btn.disabled = true;
+                }
+            }
+
+            // Manage current day button state
+            let currentBtn = document.getElementById(`streak-${currentStreakDay}`);
+            if (currentBtn) {
+                if (timePassed < cooldown && lastClaimTime !== 0) {
+                    // Locked state
+                    currentBtn.className = "bg-gray-800 text-gray-600 p-1 rounded cursor-not-allowed";
+                    currentBtn.disabled = true;
+                } else {
+                    // Ready to claim state
+                    currentBtn.className = "bg-emerald-600 text-white font-bold p-1 rounded animate-pulse border border-amber-400";
+                    currentBtn.disabled = false;
+                }
+            }
+
+            // Lock all subsequent days
+            for (let i = currentStreakDay + 1; i <= 7; i++) {
+                let btn = document.getElementById(`streak-${i}`);
+                if (btn) {
+                    btn.className = "bg-gray-800 text-gray-600 p-1 rounded";
+                    btn.disabled = true;
+                }
+            }
+        }
+
+        function checkStreakTimer() {
+            if (lastClaimTime === 0) return;
+            const now = Date.now();
+            const timePassed = now - lastClaimTime;
+            const cooldown = 24 * 60 * 60 * 1000;
+            const timerElement = document.getElementById('streak-timer-text');
+
+            if (timePassed < cooldown) {
+                let timeLeft = cooldown - timePassed;
+                let hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                timerElement.innerText = `🔒 NEXT STREAK UNLOCKS IN: ${hours}h ${minutes}m ${seconds}s`;
+            } else {
+                timerElement.innerText = "✨ NEXT DAILY REWARD IS READY TO CLAIM! ✨";
+                setupStreakUI();
+            }
+        }
+
         function claimStreak(day, reward) {
+            const now = Date.now();
+            const cooldown = 24 * 60 * 60 * 1000;
+
+            if (now - lastClaimTime < cooldown && lastClaimTime !== 0) {
+                alert("Anti-Cheat: Daily Streak is locked! Please wait 24 hours.");
+                return;
+            }
+
             if (day !== currentStreakDay) return;
+
             balance += reward;
-            let currentBtn = document.getElementById(`streak-${day}`);
-            currentBtn.className = "bg-gray-700 text-gray-500 font-bold p-1 rounded cursor-not-allowed line-through";
-            currentBtn.disabled = true;
+            lastClaimTime = now;
             
+            localStorage.setItem('v_last_claim_time', lastClaimTime);
             alert(`📅 Day ${day} Streak Verified! +${reward.toLocaleString()} Crop Coins credited.`);
             
             if (currentStreakDay < 7) {
                 currentStreakDay++;
-                let nextBtn = document.getElementById(`streak-${currentStreakDay}`);
-                nextBtn.disabled = false;
-                nextBtn.className = "bg-emerald-600 text-white font-bold p-1 rounded animate-pulse border border-amber-400";
+                localStorage.setItem('v_streak_day', currentStreakDay);
+            } else {
+                // Reset circuit after Day 7 loop completion
+                currentStreakDay = 1;
+                localStorage.setItem('v_streak_day', currentStreakDay);
             }
+
+            setupStreakUI();
             updateUI();
         }
 
-        // 3. Mystery Box Exploding Animation Protocol
+        // Mystery Box Animation Protocol
         function triggerMysteryBurst(e) {
             if (mysteryBoxClaimed) { alert("Mystery Box already opened today! Come back tomorrow."); return; }
             const box = document.getElementById('mystery-box-graphic');
@@ -280,7 +359,7 @@
             alert("🎁 Streamlit Mystery Box Burst! +100,000 Crop Coins Added.");
         }
 
-        // 4. Upgrade Module
+        // Upgrade Module
         function buyUpgrade(cost, profitIncrease) {
             if (balance >= cost) {
                 balance -= cost; profitPerHour += profitIncrease;
@@ -289,7 +368,7 @@
             } else { alert("Insufficient crop balance!"); }
         }
 
-        // 5. Secure Social Tasks Verification Protocol (5 Seconds Checking Lock)
+        // Secure Social Tasks Verification Protocol (5 Seconds Checking Lock)
         function startRealTask(btnId, targetUrl, reward) {
             let btn = document.getElementById(btnId);
             if (btn.disabled) return;
@@ -305,14 +384,14 @@
             }, 5000);
         }
 
-        // 6. Timed Ad Engine Protocol with Anti-Cheat Cooldown
+        // Timed Ad Engine Protocol with Anti-Cheat Cooldown
         let isAdRunning = false;
         function watchRealAd() {
             if (adCooldownActive) { alert("Sponsor network busy! Next Ad token available in 15 minutes."); return; }
             if (isAdRunning) return;
             isAdRunning = true;
 
-            window.open('https://google.com', '_blank'); // Open ad proxy network
+            window.open('https://google.com', '_blank');
 
             let countdown = 5;
             let mainTxt = document.getElementById('ad-text-main');
@@ -337,7 +416,6 @@
                     banner.className = "bg-gradient-to-r from-gray-900 to-emerald-950 border border-gray-800 rounded-xl p-2.5 text-center text-[10px] cursor-not-allowed opacity-60";
                     alert("Premium View Verified! +25,000 Coins distributed successfully.");
                     
-                    // Release Cooldown loop after 15 minutes (Simulated as 20s for demo ease or fully locked)
                     setTimeout(() => {
                         adCooldownActive = false;
                         mainTxt.innerText = "💰 SPONSORED PREMIUM AD ZONE (WATCH AD TO EARN +25,000) 💰";
@@ -348,7 +426,7 @@
             }, 1000);
         }
 
-        // 7. TON Wallet Advanced View Layer
+        // TON Wallet Advanced View Layer
         function openWalletOptions() { document.getElementById('wallet-providers').classList.toggle('hidden'); }
         function mockConnect(walletName) { alert(`💎 Secure Protocol Handshake: Initializing TON Network loop with ${walletName}. Mainnet linking active on global Phase 2 launch event!`); }
 
