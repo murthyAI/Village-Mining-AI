@@ -138,6 +138,27 @@
             </div>
 
             <div id="tasks-page" class="tab-content text-center pt-4 w-full">
+                <h3 class="text-lg font-bold text-emerald-400 mb-1">📋 Official Update Channels</h3>
+                <p class="text-[11px] text-gray-400 mb-4">Join our networks to lock community snapshot rewards</p>
+                <div class="space-y-3 text-left w-full">
+                    <div class="bg-emerald-950/70 border border-emerald-500/30 p-3 rounded-xl flex justify-between items-center backdrop-blur-sm">
+                        <div>
+                            <p class="text-xs font-semibold">Join Our Telegram Channel</p>
+                            <p class="text-[9px] text-gray-400">@murthy Apps & Games</p>
+                        </div>
+                        <button id="task1-btn" onclick="startRealTask('task1-btn', 'https://t.me/murthy_Apps_Games', 100000)" class="bg-amber-400 text-black font-black text-xs px-3 py-2 rounded-lg active:scale-95 transition-transform">Join +100K</button>
+                    </div>
+                    <div class="bg-emerald-950/70 border border-emerald-500/30 p-3 rounded-xl flex justify-between items-center backdrop-blur-sm">
+                        <div>
+                            <p class="text-xs font-semibold">Subscribe Our YouTube Channel</p>
+                            <p class="text-[9px] text-gray-400">@murthyAppsGames Official</p>
+                        </div>
+                        <button id="task2-btn" onclick="startRealTask('task2-btn', 'https://www.youtube.com/@murthyAppsGames', 50000)" class="bg-amber-400 text-black font-black text-xs px-3 py-2 rounded-lg active:scale-95 transition-transform">Watch +50K</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="leaderboard-page" class="tab-content text-center pt-4 w-full">
                 <h3 class="text-lg font-bold text-amber-400 mb-1">🏆 Village AI Leaderboard</h3>
                 <p class="text-[11px] text-gray-400 mb-3">Top 50 Farmers Global Metrics</p>
                 
@@ -179,18 +200,21 @@
         </div>
 
         <div class="fixed bottom-0 left-0 right-0 bg-emerald-950/95 border-t border-emerald-500/30 backdrop-blur-md py-2 z-50">
-            <div class="max-w-md mx-auto grid grid-cols-4 text-center text-[11px] font-bold text-gray-400">
+            <div class="max-w-md mx-auto grid grid-cols-5 text-center text-[10px] font-bold text-gray-400">
                 <button onclick="switchTab('tap-page')" class="nav-tab flex flex-col items-center gap-1 text-emerald-400">
-                    <span class="text-lg">🚜</span><span>Tap</span>
+                    <span class="text-base">🚜</span><span>Tap</span>
                 </button>
                 <button onclick="switchTab('mine-page')" class="nav-tab flex flex-col items-center gap-1 hover:text-white">
-                    <span class="text-lg">⛏️</span><span>Mine</span>
+                    <span class="text-base">⛏️</span><span>Mine</span>
                 </button>
                 <button onclick="switchTab('tasks-page')" class="nav-tab flex flex-col items-center gap-1 hover:text-white">
-                    <span class="text-lg">🏆</span><span>Leaderboard</span>
+                    <span class="text-base">📋</span><span>Tasks</span>
+                </button>
+                <button onclick="switchTab('leaderboard-page')" class="nav-tab flex flex-col items-center gap-1 hover:text-white">
+                    <span class="text-base">🏆</span><span>Rank</span>
                 </button>
                 <button onclick="switchTab('wallet-page')" class="nav-tab flex flex-col items-center gap-1 hover:text-white">
-                    <span class="text-lg">💰</span><span>Wallet</span>
+                    <span class="text-base">💰</span><span>Wallet</span>
                 </button>
             </div>
         </div>
@@ -238,21 +262,16 @@
             setupStreakUI();
             setInterval(checkStreakTimer, 1000);
             generateLeaderboard();
-            calculateLiveDays(); // Trigger automated calendar math layer
+            calculateLiveDays();
             updateUI();
         };
 
-        // NEW AUTOMATED LIVE DAYS MATH LAYER
         function calculateLiveDays() {
             const targetLaunchDate = new Date("November 10, 2026 00:00:00").getTime();
             const currentLiveTime = Date.now();
             const difference = targetLaunchDate - currentLiveTime;
-
             let totalDaysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
-            
-            // Fail-safe protection switch if target boundary passes
             if (totalDaysLeft < 0) totalDaysLeft = 0;
-
             document.getElementById('live-days-left').innerText = `⏳ ${totalDaysLeft} DAYS LEFT`;
         }
 
@@ -268,9 +287,7 @@
                 }
                 localStorage.setItem('v_miner_unique_id', uniqueUserId);
             }
-
             const personalInviteLink = `https://t.me/VillageMiningAIBot?start=ref_${uniqueUserId}`;
-            
             navigator.clipboard.writeText(personalInviteLink).then(() => {
                 alert(`🔗 Personal Referral Link Copied!\n\n${personalInviteLink}\n\nForward this to your friends. When they join, your specific ID will track the bonus points!`);
             }).catch(err => {
@@ -281,29 +298,20 @@
         function generateLeaderboard() {
             const container = document.getElementById('leaderboard-list');
             container.innerHTML = ""; 
-            
             const premiumNames = [
                 "CryptoKisan_TG", "Anil_Crypto_King", "Suresh_Vijayawada", "Kiran_Guntur_Miner", "Web3_Palletooru",
                 "Ravi_Teja_Ton", "NTR_Fan_Crypto", "Pawan_Kalyan_Army", "Prabhas_Rebel_Web3", "Mahesh_Babu_Fans",
                 "Crypto_Chowdary", "Reddy_Gari_Tractor", "Naidu_Web3_Guru", "Smart_Farmer_Ram", "Village_Techie",
                 "Vizag_Beach_Miner", "Tirupati_Balaji_Coin", "Nellore_Chepala_Pulusu", "Kurnool_Kondareddy", "Warangal_Fort_AI",
-                "Nizamabad_Gold", "Khammam_Tractor_Rider", "Karimnagar_Diamond", "Cyber_Raju", "Telugu_Crypto_Guy",
-                "Airdrop_Hunter_99", "Tonkeeper_Sreenu", "Vasco_Da_Gama_TG", "Mining_Tigress", "Queen_Of_Village",
-                "Godavari_Prasadu", "Krishna_Delta_Farmer", "Rayalaseema_Seenu", "Uttarandhra_Bidda", "Hyderabad_Nawab_AI",
-                "Secunderabad_Miner", "Gachibowli_Tech_King", "HiTech_City_Zamindar", "Charminar_Chai_Coin", "Golconda_Fort_33",
-                "Siddipet_Srinivas", "Medak_Church_Web3", "Nalgonda_Farmer_Pro", "Mahbubnagar_Palamuru", "Adilabad_Forest_Miner",
-                "Amaravathi_Capital", "Vijayawada_Bullet_Rider", "Eluru_Smart_Grower", "Ongole_Gitta_Web3", "Kakinada_Kaja_Lover"
+                "Nizamabad_Gold", "Khammam_Tractor_Rider", "Karimnagar_Diamond", "Cyber_Raju", "Telugu_Crypto_Guy"
             ];
-
             let startingPoints = 84521000;
-            
-            for (let i = 1; i <= 50; i++) {
+            for (let i = 1; i <= 25; i++) {
                 startingPoints -= Math.floor(Math.random() * 1200000) + 300000;
                 let medal = "🔹";
                 if (i === 1) medal = "🥇";
                 if (i === 2) medal = "🥈";
                 if (i === 3) medal = "🥉";
-
                 const row = document.createElement('div');
                 row.className = "flex justify-between items-center p-2 rounded-lg bg-emerald-950/60 border border-emerald-900/40 text-[11px]";
                 row.innerHTML = `
@@ -321,26 +329,18 @@
             const now = Date.now();
             const timePassed = now - lastClaimTime;
             const cooldown = 24 * 60 * 60 * 1000;
-
             for (let i = 1; i < currentStreakDay; i++) {
                 let btn = document.getElementById(`streak-${i}`);
-                if (btn) {
-                    btn.className = "bg-gray-700 text-gray-500 font-bold p-1 rounded cursor-not-allowed line-through";
-                    btn.disabled = true;
-                }
+                if (btn) { btn.className = "bg-gray-700 text-gray-500 font-bold p-1 rounded cursor-not-allowed line-through"; btn.disabled = true; }
             }
-
             let currentBtn = document.getElementById(`streak-${currentStreakDay}`);
             if (currentBtn) {
                 if (timePassed < cooldown && lastClaimTime !== 0) {
-                    currentBtn.className = "bg-gray-800 text-gray-600 p-1 rounded cursor-not-allowed";
-                    currentBtn.disabled = true;
+                    currentBtn.className = "bg-gray-800 text-gray-600 p-1 rounded cursor-not-allowed"; currentBtn.disabled = true;
                 } else {
-                    currentBtn.className = "bg-emerald-600 text-white font-bold p-1 rounded animate-pulse border border-amber-400";
-                    currentBtn.disabled = false;
+                    currentBtn.className = "bg-emerald-600 text-white font-bold p-1 rounded animate-pulse border border-amber-400"; currentBtn.disabled = false;
                 }
             }
-
             for (let i = currentStreakDay + 1; i <= 7; i++) {
                 let btn = document.getElementById(`streak-${i}`);
                 if (btn) { btn.className = "bg-gray-800 text-gray-600 p-1 rounded"; btn.disabled = true; }
@@ -353,7 +353,6 @@
             const timePassed = now - lastClaimTime;
             const cooldown = 24 * 60 * 60 * 1000;
             const timerElement = document.getElementById('streak-timer-text');
-
             if (timePassed < cooldown) {
                 let timeLeft = cooldown - timePassed;
                 let hours = Math.floor(timeLeft / (1000 * 60 * 60));
@@ -369,86 +368,76 @@
         function claimStreak(day, reward) {
             const now = Date.now();
             const cooldown = 24 * 60 * 60 * 1000;
-
-            if (now - lastClaimTime < cooldown && lastClaimTime !== 0) {
-                alert("Anti-Cheat: Daily Streak is locked! Please wait 24 hours.");
-                return;
-            }
+            if (now - lastClaimTime < cooldown && lastClaimTime !== 0) { alert("Anti-Cheat: Locked!"); return; }
             if (day !== currentStreakDay) return;
-
             balance += reward;
             lastClaimTime = now;
             localStorage.setItem('v_last_claim_time', lastClaimTime);
-            alert(`📅 Day ${day} Streak Verified! +${reward.toLocaleString()} Crop Coins credited.`);
-            
-            if (currentStreakDay < 7) {
-                currentStreakDay++;
-                localStorage.setItem('v_streak_day', currentStreakDay);
-            } else {
-                currentStreakDay = 1;
-                localStorage.setItem('v_streak_day', currentStreakDay);
-            }
-            setupStreakUI();
-            updateUI();
+            alert(`📅 Day ${day} Streak Verified! +${reward.toLocaleString()} Coins.`);
+            if (currentStreakDay < 7) { currentStreakDay++; localStorage.setItem('v_streak_day', currentStreakDay); } 
+            else { currentStreakDay = 1; localStorage.setItem('v_streak_day', currentStreakDay); }
+            setupStreakUI(); updateUI();
         }
 
         function triggerMysteryBurst(e) {
-            if (mysteryBoxClaimed) { alert("Mystery Box already opened today! Come back tomorrow."); return; }
+            if (mysteryBoxClaimed) { alert("Already opened!"); return; }
             const box = document.getElementById('mystery-box-graphic');
             const rect = box.getBoundingClientRect();
-            
             for (let i = 0; i < 25; i++) {
                 const p = document.createElement('div');
                 p.className = 'burst-particle bg-gradient-to-r from-purple-500 to-pink-500';
-                const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 90 + 30;
-                p.style.setProperty('--mx', `${Math.cos(angle) * distance}px`);
-                p.style.setProperty('--my', `${Math.sin(angle) * distance}px`);
-                const size = Math.random() * 10 + 6;
-                p.style.width = `${size}px`; p.style.height = `${size}px`;
+                const angle = Math.random() * Math.PI * 2; const distance = Math.random() * 90 + 30;
+                p.style.setProperty('--mx', `${Math.cos(angle) * distance}px`); p.style.setProperty('--my', `${Math.sin(angle) * distance}px`);
+                const size = Math.random() * 10 + 6; p.style.width = `${size}px`; p.style.height = `${size}px`;
                 p.style.left = `${rect.left + rect.width/2 - size/2}px`; p.style.top = `${rect.top + rect.height/2 - size/2}px`;
                 document.body.appendChild(p); setTimeout(() => p.remove(), 800);
             }
-
             balance += 100000; mysteryBoxClaimed = true;
             box.innerText = "🫙"; box.classList.remove('box-shake');
             document.getElementById('mystery-label').innerText = "✅ REWARD CLAIMED (+100K)";
             document.getElementById('mystery-label').className = "text-[9px] font-black text-gray-400 tracking-wider mt-1 bg-gray-900/60 border border-gray-700 px-3 py-0.5 rounded-full";
-            updateUI();
-            alert("🎁 Mystery Box Burst! +100,000 Crop Coins Added.");
+            updateUI(); alert("🎁 Mystery Box Added +100,000 Coins!");
         }
 
         function buyUpgrade(cost, profitIncrease) {
             if (balance >= cost) {
                 balance -= cost; profitPerHour += profitIncrease;
-                document.getElementById('profit-hour').innerText = "⚡ +" + profitPerHour;
-                updateUI(); alert("Equipment upgraded successfully!");
-            } else { alert("Insufficient crop balance!"); }
+                document.getElementById('profit-hour').innerText = "⚡ +" + profitPerHour; updateUI();
+            } else { alert("Insufficient coins!"); }
+        }
+
+        function startRealTask(btnId, targetUrl, reward) {
+            let btn = document.getElementById(btnId);
+            if (btn.disabled) return;
+            window.open(targetUrl, '_blank');
+            btn.innerText = "Verifying (5s)...";
+            btn.className = "bg-amber-600 text-black font-bold text-[10px] px-2 py-2 rounded-lg cursor-wait animate-pulse";
+            btn.disabled = true;
+            setTimeout(() => {
+                balance += reward; btn.innerText = "✅ Claimed";
+                btn.className = "bg-gray-700 text-gray-500 text-xs px-3 py-2 rounded-lg cursor-not-allowed";
+                updateUI(); alert("Task verified successfully!");
+            }, 5000);
         }
 
         function watchRealAd() {
-            if (adCooldownActive) { alert("Sponsor network busy! Next ad available in 15 minutes."); return; }
+            if (adCooldownActive) { alert("Sponsor busy! Wait 15 mins."); return; }
             window.open('https://google.com', '_blank');
-
             let countdown = 5;
             let mainTxt = document.getElementById('ad-text-main');
             let subTxt = document.getElementById('ad-text-sub');
             let banner = document.getElementById('ad-banner');
             banner.className = "bg-gradient-to-r from-red-950 to-amber-950 border border-red-500 rounded-xl p-2.5 text-center text-[10px] cursor-wait backdrop-blur-sm";
-
             let interval = setInterval(() => {
                 countdown--;
                 mainTxt.innerText = "⚠️ ADVERTISEMENT CONTENT ACTIVE... DO NOT SKIP ⚠️";
-                subTxt.innerText = "⌛ Checking publisher view logs: " + countdown + "s remaining";
-
+                subTxt.innerText = "⌛ Checking publisher logs: " + countdown + "s remaining";
                 if (countdown <= 0) {
-                    clearInterval(interval);
-                    balance += 25000; updateUI(); adCooldownActive = true;
+                    clearInterval(interval); balance += 25000; updateUI(); adCooldownActive = true;
                     mainTxt.innerText = "⏳ AD LOCKED (COOLDOWN MODE) ⏳";
-                    subTxt.innerText = "🔒 Next sponsored crop allocation available in 15 minutes.";
+                    subTxt.innerText = "🔒 Next sponsored allocation available in 15 minutes.";
                     banner.className = "bg-gradient-to-r from-gray-900 to-emerald-950 border border-gray-800 rounded-xl p-2.5 text-center text-[10px] cursor-not-allowed opacity-60";
                     alert("Premium View Verified! +25,000 Coins distributed.");
-                    
                     setTimeout(() => {
                         adCooldownActive = false;
                         mainTxt.innerText = "💰 SPONSORED PREMIUM AD ZONE (WATCH AD TO EARN +25,000) 💰";
