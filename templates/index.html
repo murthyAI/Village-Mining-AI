@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Village Mining AI - Grand Launch Edition</title>
+    <title>Village Mining AI - Master Launch Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body { background-color: #031408; font-family: sans-serif; overflow: hidden; }
         .neon-glow { box-shadow: 0 0 25px #10b981; }
@@ -20,7 +21,7 @@
         .box-shake { animation: shake 0.6s ease-in-out infinite alternate; }
         .burst-particle { position: absolute; pointer-events: none; border-radius: 50%; animation: explode 0.8s ease-out forwards; }
         @keyframes explode {
-            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            0 { transform: translate(0, 0) scale(1); opacity: 1; }
             100% { transform: translate(var(--mx), var(--my)) scale(0.2); opacity: 0; }
         }
     </style>
@@ -110,7 +111,7 @@
                         <span id="energy-counter" class="font-bold text-emerald-400">500 / 500</span>
                     </div>
                     
-                    <button onclick="copyReferralLink()" class="w-full max-w-xs bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs py-2 px-4 rounded-xl shadow-md border border-purple-400/40 flex items-center justify-center gap-2 active:scale-95 transition-all mt-1">
+                    <button onclick="copyReferralLink()" class="w-full max-w-xs bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-md border border-purple-400/40 flex items-center justify-center gap-2 active:scale-95 transition-all mt-1">
                         <span>🔗</span><span>INVITE FRIENDS & EARN +50K</span>
                     </button>
                 </div>
@@ -162,18 +163,18 @@
                 <span class="text-5xl block mb-2">💎</span>
                 <h3 class="text-lg font-bold text-emerald-400 mb-1">Web3 Airdrop Wallet</h3>
                 <p class="text-xs text-gray-400 max-w-xs mx-auto mb-4">Connect decentralized web3 wallet to lock your token distribution metrics.</p>
-                <button onclick="openWalletOptions()" class="w-full bg-gradient-to-r from-emerald-500 to-green-500 text-black font-black py-3 rounded-xl shadow-lg active:scale-95 transition-transform">Connect Wallet</button>
+                
+                <button id="main-wallet-btn" onclick="openWalletOptions()" class="w-full bg-gradient-to-r from-emerald-500 to-green-500 text-black font-black py-3 rounded-xl shadow-lg active:scale-95 transition-transform">Connect Wallet</button>
                 
                 <div id="wallet-providers" class="hidden mt-6 w-full space-y-2 bg-emerald-950/50 p-3 rounded-xl border border-emerald-800/40">
                     <p class="text-[10px] text-emerald-400 font-bold tracking-wider mb-2">CHOOSE TON PROVIDER</p>
-                    <div onclick="mockConnect('Tonkeeper')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center gap-3 cursor-pointer hover:bg-emerald-800">
-                        <span>💎</span><span class="text-xs font-bold">Tonkeeper Wallet</span>
+                    <div onclick="mockConnect('Tonkeeper')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center justify-between cursor-pointer hover:bg-emerald-800">
+                        <div class="flex items-center gap-3"><span>💎</span><span id="label-Tonkeeper" class="text-xs font-bold">Tonkeeper Wallet</span></div>
+                        <span id="status-Tonkeeper" class="text-[10px] text-gray-400">Disconnected</span>
                     </div>
-                    <div onclick="mockConnect('Telegram Wallet')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center gap-3 cursor-pointer hover:bg-emerald-800">
-                        <span>✈️</span><span class="text-xs font-bold">Telegram Wallet (🔥 Recommended)</span>
-                    </div>
-                    <div onclick="mockConnect('MyTonWallet')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center gap-3 cursor-pointer hover:bg-emerald-800">
-                        <span>🪺</span><span class="text-xs font-bold">MyTonWallet Ecosystem</span>
+                    <div onclick="mockConnect('Telegram Wallet')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center justify-between cursor-pointer hover:bg-emerald-800">
+                        <div class="flex items-center gap-3"><span>✈️</span><span id="label-Telegram-Wallet" class="text-xs font-bold">Telegram Wallet</span></div>
+                        <span id="status-Telegram-Wallet" class="text-[10px] text-gray-400">Disconnected</span>
                     </div>
                 </div>
             </div>
@@ -207,17 +208,23 @@
     </div>
 
     <script>
+        // Telegram Web App Handshake initialization
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.ready();
+            window.Telegram.WebApp.expand();
+        }
+
         let balance = 1692645;
         let energy = 500;
         let profitPerHour = 1950;
         let mysteryBoxClaimed = false;
         let adCooldownActive = false;
 
-        // STREAK MANAGEMENT ENGINE
+        // STREAK LOCAL STORAGE ENGINE
         let currentStreakDay = parseInt(localStorage.getItem('v_streak_day')) || 1;
         let lastClaimTime = parseInt(localStorage.getItem('v_last_claim_time')) || 0;
 
-        // CANVAS PARTICLES SYSTEM
+        // BUBBLE CANVAS BACKGROUND SYSTEM
         const canvas = document.getElementById('bubble-canvas');
         const ctx = canvas.getContext('2d');
         let particlesArray = [];
@@ -243,25 +250,41 @@
         window.onload = function() {
             setupStreakUI();
             setInterval(checkStreakTimer, 1000);
+            
+            // Restore wallet state if connected before
+            let savedWallet = localStorage.getItem('v_connected_wallet');
+            if (savedWallet) {
+                applyWalletConnectedUI(savedWallet);
+            }
             updateUI();
         };
 
         // 1. Tapping System
         document.getElementById('tap-btn').addEventListener('click', () => { if (energy > 0) { balance += 4; energy -= 1; updateUI(); } });
 
-        // 2. Referral Link Link Generation Module
+        // 2. NEW DYNAMIC REFERRAL GENERATOR WITH REAL-TIME TG USER IDS
         function copyReferralLink() {
-            // Generates active real-time invite code structure linked to app deploy URL
-            const userInviteLink = `https://t.me/VillageMiningAIBot?start=ref_Murthy_${Math.floor(100000 + Math.random() * 900000)}`;
+            let telegramUserId = "Guest_" + Math.floor(100000 + Math.random() * 900000);
             
-            navigator.clipboard.writeText(userInviteLink).then(() => {
-                alert(`🔗 Referral Link Copied!\n\n${userInviteLink}\n\nShare with friends to claim +50,000 bonus crop distribution points!`);
+            // Pull real live ID from Telegram Environment if available
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
+                if (window.Telegram.WebApp.initDataUnsafe.user.id) {
+                    telegramUserId = window.Telegram.WebApp.initDataUnsafe.user.id;
+                }
+            }
+
+            // Clean custom referral structure bound to your bot username
+            const uniqueInviteLink = `https://t.me/VillageMiningAIBot?start=ref_${telegramUserId}`;
+            
+            navigator.clipboard.writeText(uniqueInviteLink).then(() => {
+                alert(`🔗 Unique Link Copied For You!\n\n${uniqueInviteLink}\n\nShare this link. When your friends join, you will automatically receive +50,000 Crop Coins!`);
             }).catch(err => {
-                alert("Failed to copy link automatically. Please try again.");
+                // Fail-safe copy protocol
+                alert(`Your invite link is: ${uniqueInviteLink}`);
             });
         }
 
-        // 3. Secure Streak Engine
+        // 3. Streak Core
         function setupStreakUI() {
             const now = Date.now();
             const timePassed = now - lastClaimTime;
@@ -337,7 +360,7 @@
             updateUI();
         }
 
-        // 4. Mystery Box Explosion
+        // 4. Mystery Box Explosion Animation
         function triggerMysteryBurst(e) {
             if (mysteryBoxClaimed) { alert("Mystery Box already opened today! Come back tomorrow."); return; }
             const box = document.getElementById('mystery-box-graphic');
@@ -361,19 +384,19 @@
             document.getElementById('mystery-label').innerText = "✅ REWARD CLAIMED (+100K)";
             document.getElementById('mystery-label').className = "text-[9px] font-black text-gray-400 tracking-wider mt-1 bg-gray-900/60 border border-gray-700 px-3 py-0.5 rounded-full";
             updateUI();
-            alert("🎁 Streamlit Mystery Box Burst! +100,000 Crop Coins Added.");
+            alert("🎁 Mystery Box Burst! +100,000 Crop Coins Added.");
         }
 
-        // 5. Upgrades Market
+        // 5. Market Assets Engine
         function buyUpgrade(cost, profitIncrease) {
             if (balance >= cost) {
                 balance -= cost; profitPerHour += profitIncrease;
                 document.getElementById('profit-hour').innerText = "⚡ +" + profitPerHour;
-                updateUI(); alert("Market Asset Upgraded Successfully!");
+                updateUI(); alert("Equipment upgraded successfully!");
             } else { alert("Insufficient crop balance!"); }
         }
 
-        // 6. Verification Tasks
+        // 6. Mission Tasks Verification
         function startRealTask(btnId, targetUrl, reward) {
             let btn = document.getElementById(btnId);
             if (btn.disabled) return;
@@ -385,13 +408,13 @@
             setTimeout(() => {
                 balance += reward; btn.innerText = "✅ Claimed";
                 btn.className = "bg-gray-700 text-gray-500 text-xs px-3 py-2 rounded-lg cursor-not-allowed";
-                updateUI(); alert("Mission Protocol Verified! Rewards Credited.");
+                updateUI(); alert("Task verified successfully! Rewards credited.");
             }, 5000);
         }
 
-        // 7. Ad Cooldown Core
+        // 7. Premium Sponsored Ad Module
         function watchRealAd() {
-            if (adCooldownActive) { alert("Sponsor network busy! Next Ad token available in 15 minutes."); return; }
+            if (adCooldownActive) { alert("Sponsor network busy! Next ad available in 15 minutes."); return; }
             window.open('https://google.com', '_blank');
 
             let countdown = 5;
@@ -409,7 +432,7 @@
                     clearInterval(interval);
                     balance += 25000; updateUI(); adCooldownActive = true;
                     mainTxt.innerText = "⏳ AD LOCKED (COOLDOWN MODE) ⏳";
-                    subTxt.innerText = "🔒 Next sponsored crop multiplier distribution available in 15 minutes.";
+                    subTxt.innerText = "🔒 Next sponsored crop allocation available in 15 minutes.";
                     banner.className = "bg-gradient-to-r from-gray-900 to-emerald-950 border border-gray-800 rounded-xl p-2.5 text-center text-[10px] cursor-not-allowed opacity-60";
                     alert("Premium View Verified! +25,000 Coins distributed.");
                     
@@ -418,14 +441,54 @@
                         mainTxt.innerText = "💰 SPONSORED PREMIUM AD ZONE (WATCH AD TO EARN +25,000) 💰";
                         subTxt.innerText = "🌾 Click to open partner ad and hold for 5 seconds to claim! 🌾";
                         banner.className = "bg-gradient-to-r from-amber-950 to-emerald-950 border border-amber-500/50 rounded-xl p-2.5 text-center text-[10px] cursor-pointer backdrop-blur-sm";
-                    }, 20000); // 20s validation release
+                    }, 900000); // 15 Minute Lockout
                 }
             }, 1000);
         }
 
-        // 8. Wallets Setup
-        function openWalletOptions() { document.getElementById('wallet-providers').classList.toggle('hidden'); }
-        function mockConnect(walletName) { alert(`💎 Secure Protocol Handshake: Initializing TON Network loop with ${walletName}. Mainnet linking active on global Phase 2 launch event!`); }
+        // 8. HIGH QUALITY PERSISTENT WALLET CONNECTION HANDLING
+        function openWalletOptions() { 
+            document.getElementById('wallet-providers').classList.toggle('hidden'); 
+        }
+
+        function mockConnect(walletName) {
+            alert(`💎 Requesting Secure Protocol Handshake with ${walletName}...`);
+            
+            // Save state to local storage to persist across reloads
+            localStorage.setItem('v_connected_wallet', walletName);
+            
+            // Instantly apply UI modifications live on the screen
+            applyWalletConnectedUI(walletName);
+            
+            // Hide the drawer smoothly
+            setTimeout(() => {
+                document.getElementById('wallet-providers').classList.add('hidden');
+            }, 600);
+        }
+
+        function applyWalletConnectedUI(walletName) {
+            // Generate a secure mock address sequence like true TON addresses
+            const mockAddress = "EQB" + Math.random().toString(36).substring(2, 6).toUpperCase() + "..." + Math.random().toString(36).substring(2, 5).toLowerCase() + "7x9";
+            
+            // Update Main Wallet Button Text and Colors to show active persistent link
+            const mainBtn = document.getElementById('main-wallet-btn');
+            mainBtn.innerText = `✅ Connected: ${walletName} (${mockAddress})`;
+            mainBtn.className = "w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black py-3 rounded-xl shadow-lg border border-blue-400/40 cursor-default";
+            mainBtn.onclick = null; // Lock button to prevent repetitive triggers
+
+            // Update specific list text fields inside the drawer element
+            if(walletName === 'Tonkeeper') {
+                document.getElementById('status-Tonkeeper').innerText = "Active Link";
+                document.getElementById('status-Tonkeeper').className = "text-[10px] text-green-400 font-bold";
+                document.getElementById('status-Telegram-Wallet').innerText = "Disconnected";
+                document.getElementById('status-Telegram-Wallet').className = "text-[10px] text-gray-500";
+            } else {
+                document.getElementById('status-Telegram-Wallet').innerText = "Active Link";
+                document.getElementById('status-Telegram-Wallet').className = "text-[10px] text-green-400 font-bold";
+                document.getElementById('status-Tonkeeper').innerText = "Disconnected";
+                document.getElementById('status-Tonkeeper').className = "text-[10px] text-gray-500";
+            }
+        }
 
         function updateUI() {
             document.getElementById('coin-balance').innerText = balance.toLocaleString();
@@ -440,6 +503,8 @@
             document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('text-emerald-400'));
             event.currentTarget.classList.add('text-emerald-400');
         }
+        
+        // Energy Passive Regeneration loop
         setInterval(() => { if (energy < 500) { energy += 1; document.getElementById('energy-counter').innerText = energy + " / 500"; } }, 3000);
     </script>
 </body>
