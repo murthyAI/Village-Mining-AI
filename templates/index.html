@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Village Mining AI - Official Launch</title>
+    <title>Village Mining AI - Grand Launch Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #031408; font-family: sans-serif; overflow: hidden; }
@@ -67,7 +67,7 @@
             <div id="tap-page" class="tab-content active text-center pt-1">
                 
                 <div class="w-full bg-emerald-950/80 border border-emerald-500/40 p-2 rounded-xl mb-3 backdrop-blur-sm">
-                    <p class="text-[10px] font-bold text-amber-400 mb-1 flex items-center justify-center gap-1">📅 DAILY STREAK SYSTEMS (LOCKED TO 24H)</p>
+                    <p class="text-[10px] font-bold text-amber-400 mb-1 flex items-center justify-center gap-1">📅 DAILY STREAK SYSTEM (24H LOCK)</p>
                     <p id="streak-timer-text" class="text-[9px] text-gray-400 mb-1.5 font-semibold"></p>
                     <div class="grid grid-cols-7 gap-1 text-[9px]">
                         <button id="streak-1" onclick="claimStreak(1, 10000)" class="bg-emerald-800 text-white font-bold p-1 rounded">D1<br>+10K</button>
@@ -85,12 +85,12 @@
                     <p id="mystery-label" class="text-[9px] font-black text-purple-400 tracking-wider mt-1 bg-purple-950/60 border border-purple-500/30 px-3 py-0.5 rounded-full backdrop-blur-sm">CLICK TO CRACK MYSTERY BOX</p>
                 </div>
 
-                <div class="flex items-center justify-center gap-2 mb-3">
+                <div class="flex items-center justify-center gap-2 mb-2">
                     <span class="text-2xl text-amber-400">🪙</span>
-                    <span id="coin-balance" class="text-4xl font-black text-amber-400 tracking-wide">1,657,565</span>
+                    <span id="coin-balance" class="text-3xl font-black text-amber-400 tracking-wide">1,657,565</span>
                 </div>
 
-                <div class="w-full bg-emerald-950/80 border border-emerald-800/50 rounded-full h-5 mb-4 relative overflow-hidden">
+                <div class="w-full bg-emerald-950/80 border border-emerald-800/50 rounded-full h-5 mb-3 relative overflow-hidden">
                     <div id="rank-bar" class="bg-gradient-to-r from-emerald-500 to-green-400 h-full w-[49%] transition-all duration-300"></div>
                     <span class="absolute inset-0 flex items-center justify-between px-3 text-[9px] font-bold">
                         <span>RANK METRIC</span>
@@ -98,16 +98,21 @@
                     </span>
                 </div>
 
-                <div class="flex justify-center items-center my-2 w-full">
-                    <button id="tap-btn" class="w-48 h-48 bg-gradient-to-b from-emerald-600 to-emerald-900 rounded-full border-4 border-emerald-400 flex items-center justify-center neon-glow active:scale-95 transition-transform duration-75 focus:outline-none">
-                        <span class="text-6xl filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">🚜</span>
+                <div class="flex justify-center items-center my-1 w-full">
+                    <button id="tap-btn" class="w-40 h-40 bg-gradient-to-b from-emerald-600 to-emerald-900 rounded-full border-4 border-emerald-400 flex items-center justify-center neon-glow active:scale-95 transition-transform duration-75 focus:outline-none">
+                        <span class="text-5xl filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">🚜</span>
                     </button>
                 </div>
-                <p class="text-[10px] font-bold text-emerald-400 tracking-widest mt-1">✨ TAP TRACTOR TO EARN ✨</p>
 
-                <div class="mt-3 inline-flex items-center gap-2 bg-emerald-950/80 border border-emerald-500/30 px-4 py-1 rounded-full text-xs backdrop-blur-sm">
-                    <span>⚡ ENERGY:</span>
-                    <span id="energy-counter" class="font-bold text-emerald-400">500 / 500</span>
+                <div class="mt-3 flex flex-col items-center gap-2 w-full">
+                    <div class="inline-flex items-center gap-2 bg-emerald-950/80 border border-emerald-500/30 px-4 py-1 rounded-full text-xs backdrop-blur-sm">
+                        <span>⚡ ENERGY:</span>
+                        <span id="energy-counter" class="font-bold text-emerald-400">500 / 500</span>
+                    </div>
+                    
+                    <button onclick="copyReferralLink()" class="w-full max-w-xs bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs py-2 px-4 rounded-xl shadow-md border border-purple-400/40 flex items-center justify-center gap-2 active:scale-95 transition-all mt-1">
+                        <span>🔗</span><span>INVITE FRIENDS & EARN +50K</span>
+                    </button>
                 </div>
             </div>
 
@@ -202,17 +207,17 @@
     </div>
 
     <script>
-        let balance = 1657565;
+        let balance = 1692645;
         let energy = 500;
         let profitPerHour = 1950;
         let mysteryBoxClaimed = false;
         let adCooldownActive = false;
 
-        // SECURE STREAK STATE RETRIEVAL
+        // STREAK MANAGEMENT ENGINE
         let currentStreakDay = parseInt(localStorage.getItem('v_streak_day')) || 1;
         let lastClaimTime = parseInt(localStorage.getItem('v_last_claim_time')) || 0;
 
-        // CANVAS BACKGROUND FLOATING BUBBLES LOGIC
+        // CANVAS PARTICLES SYSTEM
         const canvas = document.getElementById('bubble-canvas');
         const ctx = canvas.getContext('2d');
         let particlesArray = [];
@@ -235,22 +240,33 @@
         function animateCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); particlesArray[i].draw(); } requestAnimationFrame(animateCanvas); }
         animateCanvas();
 
-        // On Load initialization
         window.onload = function() {
             setupStreakUI();
             setInterval(checkStreakTimer, 1000);
+            updateUI();
         };
 
-        // Tapping Module
+        // 1. Tapping System
         document.getElementById('tap-btn').addEventListener('click', () => { if (energy > 0) { balance += 4; energy -= 1; updateUI(); } });
 
-        // SECURE ANTI-CHEAT DAILY STREAK LOGIC
+        // 2. Referral Link Link Generation Module
+        function copyReferralLink() {
+            // Generates active real-time invite code structure linked to app deploy URL
+            const userInviteLink = `https://t.me/VillageMiningAIBot?start=ref_Murthy_${Math.floor(100000 + Math.random() * 900000)}`;
+            
+            navigator.clipboard.writeText(userInviteLink).then(() => {
+                alert(`🔗 Referral Link Copied!\n\n${userInviteLink}\n\nShare with friends to claim +50,000 bonus crop distribution points!`);
+            }).catch(err => {
+                alert("Failed to copy link automatically. Please try again.");
+            });
+        }
+
+        // 3. Secure Streak Engine
         function setupStreakUI() {
             const now = Date.now();
             const timePassed = now - lastClaimTime;
-            const cooldown = 24 * 60 * 60 * 1000; // 24 Hours Lock
+            const cooldown = 24 * 60 * 60 * 1000;
 
-            // Render all previous days as completed
             for (let i = 1; i < currentStreakDay; i++) {
                 let btn = document.getElementById(`streak-${i}`);
                 if (btn) {
@@ -259,27 +275,20 @@
                 }
             }
 
-            // Manage current day button state
             let currentBtn = document.getElementById(`streak-${currentStreakDay}`);
             if (currentBtn) {
                 if (timePassed < cooldown && lastClaimTime !== 0) {
-                    // Locked state
                     currentBtn.className = "bg-gray-800 text-gray-600 p-1 rounded cursor-not-allowed";
                     currentBtn.disabled = true;
                 } else {
-                    // Ready to claim state
                     currentBtn.className = "bg-emerald-600 text-white font-bold p-1 rounded animate-pulse border border-amber-400";
                     currentBtn.disabled = false;
                 }
             }
 
-            // Lock all subsequent days
             for (let i = currentStreakDay + 1; i <= 7; i++) {
                 let btn = document.getElementById(`streak-${i}`);
-                if (btn) {
-                    btn.className = "bg-gray-800 text-gray-600 p-1 rounded";
-                    btn.disabled = true;
-                }
+                if (btn) { btn.className = "bg-gray-800 text-gray-600 p-1 rounded"; btn.disabled = true; }
             }
         }
 
@@ -310,12 +319,10 @@
                 alert("Anti-Cheat: Daily Streak is locked! Please wait 24 hours.");
                 return;
             }
-
             if (day !== currentStreakDay) return;
 
             balance += reward;
             lastClaimTime = now;
-            
             localStorage.setItem('v_last_claim_time', lastClaimTime);
             alert(`📅 Day ${day} Streak Verified! +${reward.toLocaleString()} Crop Coins credited.`);
             
@@ -323,16 +330,14 @@
                 currentStreakDay++;
                 localStorage.setItem('v_streak_day', currentStreakDay);
             } else {
-                // Reset circuit after Day 7 loop completion
                 currentStreakDay = 1;
                 localStorage.setItem('v_streak_day', currentStreakDay);
             }
-
             setupStreakUI();
             updateUI();
         }
 
-        // Mystery Box Animation Protocol
+        // 4. Mystery Box Explosion
         function triggerMysteryBurst(e) {
             if (mysteryBoxClaimed) { alert("Mystery Box already opened today! Come back tomorrow."); return; }
             const box = document.getElementById('mystery-box-graphic');
@@ -359,7 +364,7 @@
             alert("🎁 Streamlit Mystery Box Burst! +100,000 Crop Coins Added.");
         }
 
-        // Upgrade Module
+        // 5. Upgrades Market
         function buyUpgrade(cost, profitIncrease) {
             if (balance >= cost) {
                 balance -= cost; profitPerHour += profitIncrease;
@@ -368,7 +373,7 @@
             } else { alert("Insufficient crop balance!"); }
         }
 
-        // Secure Social Tasks Verification Protocol (5 Seconds Checking Lock)
+        // 6. Verification Tasks
         function startRealTask(btnId, targetUrl, reward) {
             let btn = document.getElementById(btnId);
             if (btn.disabled) return;
@@ -384,13 +389,9 @@
             }, 5000);
         }
 
-        // Timed Ad Engine Protocol with Anti-Cheat Cooldown
-        let isAdRunning = false;
+        // 7. Ad Cooldown Core
         function watchRealAd() {
             if (adCooldownActive) { alert("Sponsor network busy! Next Ad token available in 15 minutes."); return; }
-            if (isAdRunning) return;
-            isAdRunning = true;
-
             window.open('https://google.com', '_blank');
 
             let countdown = 5;
@@ -406,48 +407,39 @@
 
                 if (countdown <= 0) {
                     clearInterval(interval);
-                    balance += 25000;
-                    updateUI();
-                    isAdRunning = false;
-                    adCooldownActive = true;
-
+                    balance += 25000; updateUI(); adCooldownActive = true;
                     mainTxt.innerText = "⏳ AD LOCKED (COOLDOWN MODE) ⏳";
                     subTxt.innerText = "🔒 Next sponsored crop multiplier distribution available in 15 minutes.";
                     banner.className = "bg-gradient-to-r from-gray-900 to-emerald-950 border border-gray-800 rounded-xl p-2.5 text-center text-[10px] cursor-not-allowed opacity-60";
-                    alert("Premium View Verified! +25,000 Coins distributed successfully.");
+                    alert("Premium View Verified! +25,000 Coins distributed.");
                     
                     setTimeout(() => {
                         adCooldownActive = false;
                         mainTxt.innerText = "💰 SPONSORED PREMIUM AD ZONE (WATCH AD TO EARN +25,000) 💰";
                         subTxt.innerText = "🌾 Click to open partner ad and hold for 5 seconds to claim! 🌾";
                         banner.className = "bg-gradient-to-r from-amber-950 to-emerald-950 border border-amber-500/50 rounded-xl p-2.5 text-center text-[10px] cursor-pointer backdrop-blur-sm";
-                    }, 20000); // 20 seconds mock release loop for validation
+                    }, 20000); // 20s validation release
                 }
             }, 1000);
         }
 
-        // TON Wallet Advanced View Layer
+        // 8. Wallets Setup
         function openWalletOptions() { document.getElementById('wallet-providers').classList.toggle('hidden'); }
         function mockConnect(walletName) { alert(`💎 Secure Protocol Handshake: Initializing TON Network loop with ${walletName}. Mainnet linking active on global Phase 2 launch event!`); }
 
-        // UI Core Sync Updates
         function updateUI() {
             document.getElementById('coin-balance').innerText = balance.toLocaleString();
             document.getElementById('energy-counter').innerText = energy + " / 500";
-            let target = 3342435;
-            let percentage = Math.min((balance / target) * 100, 100);
+            let percentage = Math.min((balance / 3342435) * 100, 100);
             document.getElementById('rank-bar').style.width = percentage + "%";
         }
 
-        // Navigation Engine
         function switchTab(pageId) {
             document.querySelectorAll('.tab-content').forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('text-emerald-400'));
             event.currentTarget.classList.add('text-emerald-400');
         }
-
-        // Automated Recovery Module
         setInterval(() => { if (energy < 500) { energy += 1; document.getElementById('energy-counter').innerText = energy + " / 500"; } }, 3000);
     </script>
 </body>
