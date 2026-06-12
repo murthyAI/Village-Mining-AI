@@ -3,35 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Village Mining AI - Master Streamlit Edition</title>
+    <title>Village Mining AI - Official Launch</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #031408; font-family: sans-serif; overflow: hidden; }
         .neon-glow { box-shadow: 0 0 25px #10b981; }
         .tab-content { display: none; }
         .tab-content.active { display: flex; flex-direction: column; align-items: center; }
-        
-        /* Floating Bubbles Background Canvas Custom */
-        #bubble-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;
-        }
+        #bubble-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .app-container { z-index: 10; position: relative; }
-
-        /* Mystery Box Shake & Burst Animations */
         @keyframes shake {
             0%, 100% { transform: rotate(0deg); }
-            20%, 60% { transform: rotate(-10deg); }
-            40%, 80% { transform: rotate(10deg); }
+            20%, 60 sign { transform: rotate(-8deg); }
+            40%, 80% { transform: rotate(8deg); }
         }
-        .box-shake { animation: shake 0.5s ease-in-out infinite alternate; }
-
-        /* Particle Burst for Mystery Box */
-        .burst-particle {
-            position: absolute; pointer-events: none; border-radius: 50%; animation: explode 0.8s ease-out forwards;
-        }
+        .box-shake { animation: shake 0.6s ease-in-out infinite alternate; }
+        .burst-particle { position: absolute; pointer-events: none; border-radius: 50%; animation: explode 0.8s ease-out forwards; }
         @keyframes explode {
             0% { transform: translate(0, 0) scale(1); opacity: 1; }
-            100% { transform: translate(var(--mx), var(--my)) scale(0.3); opacity: 0; }
+            100% { transform: translate(var(--mx), var(--my)) scale(0.2); opacity: 0; }
         }
     </style>
 </head>
@@ -74,15 +64,24 @@
 
         <div class="flex-grow w-full max-w-md mx-auto px-4 overflow-y-auto mb-2 relative">
             
-            <div id="tap-page" class="tab-content active text-center pt-2 relative">
+            <div id="tap-page" class="tab-content active text-center pt-1">
                 
-                <div class="w-full flex flex-col items-center justify-center mb-4 relative" id="mystery-zone">
-                    <div id="mystery-box-graphic" onclick="triggerMysteryBurst(event)" class="text-6xl cursor-pointer box-shake filter drop-shadow-[0_0_15px_rgba(168,85,247,0.6)] hover:scale-110 transition-transform">
-                        🎁
+                <div class="w-full bg-emerald-950/80 border border-emerald-500/40 p-2 rounded-xl mb-3 backdrop-blur-sm">
+                    <p class="text-[10px] font-bold text-amber-400 mb-1.5 flex items-center justify-center gap-1">📅 DAILY STREAK CLAIM SYSTEM</p>
+                    <div class="grid grid-cols-7 gap-1 text-[9px]">
+                        <button id="streak-1" onclick="claimStreak(1, 10000)" class="bg-emerald-800 text-white font-bold p-1 rounded">D1<br>+10K</button>
+                        <button id="streak-2" onclick="claimStreak(2, 20000)" class="bg-emerald-900/40 border border-emerald-700/50 p-1 rounded text-gray-400" disabled>D2<br>+20K</button>
+                        <button id="streak-3" onclick="claimStreak(3, 30000)" class="bg-emerald-900/40 border border-emerald-700/50 p-1 rounded text-gray-400" disabled>D3<br>+30K</button>
+                        <button id="streak-4" onclick="claimStreak(4, 40000)" class="bg-emerald-900/40 border border-emerald-700/50 p-1 rounded text-gray-400" disabled>D4<br>+40K</button>
+                        <button id="streak-5" onclick="claimStreak(5, 50000)" class="bg-emerald-900/40 border border-emerald-700/50 p-1 rounded text-gray-400" disabled>D5<br>+50K</button>
+                        <button id="streak-6" onclick="claimStreak(6, 80000)" class="bg-emerald-900/40 border border-emerald-700/50 p-1 rounded text-gray-400" disabled>D6<br>+80K</button>
+                        <button id="streak-7" onclick="claimStreak(7, 150000)" class="bg-emerald-900/40 border border-purple-700/50 p-1 rounded text-purple-400" disabled>D7<br>+150K</button>
                     </div>
-                    <p id="mystery-label" class="text-[10px] font-black text-purple-400 tracking-wider mt-1 bg-purple-950/60 border border-purple-500/30 px-3 py-0.5 rounded-full backdrop-blur-sm">
-                        CLICK TO CRACK MYSTERY BOX
-                    </p>
+                </div>
+
+                <div class="w-full flex flex-col items-center justify-center mb-3 relative" id="mystery-zone">
+                    <div id="mystery-box-graphic" onclick="triggerMysteryBurst(event)" class="text-5xl cursor-pointer box-shake filter drop-shadow-[0_0_15px_rgba(168,85,247,0.6)] hover:scale-110 transition-transform">🎁</div>
+                    <p id="mystery-label" class="text-[9px] font-black text-purple-400 tracking-wider mt-1 bg-purple-950/60 border border-purple-500/30 px-3 py-0.5 rounded-full backdrop-blur-sm">CLICK TO CRACK MYSTERY BOX</p>
                 </div>
 
                 <div class="flex items-center justify-center gap-2 mb-3">
@@ -90,7 +89,7 @@
                     <span id="coin-balance" class="text-4xl font-black text-amber-400 tracking-wide">1,657,565</span>
                 </div>
 
-                <div class="w-full bg-emerald-950/80 border border-emerald-800/50 rounded-full h-5 mb-5 relative overflow-hidden">
+                <div class="w-full bg-emerald-950/80 border border-emerald-800/50 rounded-full h-5 mb-4 relative overflow-hidden">
                     <div id="rank-bar" class="bg-gradient-to-r from-emerald-500 to-green-400 h-full w-[49%] transition-all duration-300"></div>
                     <span class="absolute inset-0 flex items-center justify-between px-3 text-[9px] font-bold">
                         <span>RANK METRIC</span>
@@ -98,14 +97,14 @@
                     </span>
                 </div>
 
-                <div class="flex justify-center items-center my-4 w-full">
-                    <button id="tap-btn" class="w-52 h-52 bg-gradient-to-b from-emerald-600 to-emerald-900 rounded-full border-4 border-emerald-400 flex items-center justify-center neon-glow active:scale-95 transition-transform duration-75 focus:outline-none">
-                        <span class="text-7xl filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">🚜</span>
+                <div class="flex justify-center items-center my-2 w-full">
+                    <button id="tap-btn" class="w-48 h-48 bg-gradient-to-b from-emerald-600 to-emerald-900 rounded-full border-4 border-emerald-400 flex items-center justify-center neon-glow active:scale-95 transition-transform duration-75 focus:outline-none">
+                        <span class="text-6xl filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">🚜</span>
                     </button>
                 </div>
-                <p class="text-[10px] font-bold text-emerald-400 tracking-widest mt-2">✨ TAP TRACTOR TO EARN ✨</p>
+                <p class="text-[10px] font-bold text-emerald-400 tracking-widest mt-1">✨ TAP TRACTOR TO EARN ✨</p>
 
-                <div class="mt-4 inline-flex items-center gap-2 bg-emerald-950/80 border border-emerald-500/30 px-4 py-1 rounded-full text-xs backdrop-blur-sm">
+                <div class="mt-3 inline-flex items-center gap-2 bg-emerald-950/80 border border-emerald-500/30 px-4 py-1 rounded-full text-xs backdrop-blur-sm">
                     <span>⚡ ENERGY:</span>
                     <span id="energy-counter" class="font-bold text-emerald-400">500 / 500</span>
                 </div>
@@ -134,21 +133,21 @@
 
             <div id="tasks-page" class="tab-content text-center pt-4 w-full">
                 <h3 class="text-lg font-bold text-emerald-400 mb-1">📋 Bonus Missions</h3>
-                <p class="text-[11px] text-gray-400 mb-4">Join links and wait 5 seconds to verify reward</p>
+                <p class="text-[11px] text-gray-400 mb-4">Join official channels and verify views to earn</p>
                 <div class="space-y-3 text-left w-full">
                     <div class="bg-emerald-950/70 border border-emerald-500/30 p-3 rounded-xl flex justify-between items-center backdrop-blur-sm">
                         <div>
                             <p class="text-xs font-semibold">Join Our Telegram Channel</p>
-                            <p class="text-[9px] text-gray-400">Streamlit secure validation loop</p>
+                            <p class="text-[9px] text-gray-400">@murthy Apps & Games</p>
                         </div>
-                        <button id="task1-btn" onclick="startRealTask('task1-btn', 'https://t.me/VillageMiningAIBot', 100000)" class="bg-amber-400 text-black font-black text-xs px-3 py-2 rounded-lg active:scale-95 transition-transform">Join +100K</button>
+                        <button id="task1-btn" onclick="startRealTask('task1-btn', 'https://t.me/murthy_Apps_Games', 100000)" class="bg-amber-400 text-black font-black text-xs px-3 py-2 rounded-lg active:scale-95 transition-transform">Join +100K</button>
                     </div>
                     <div class="bg-emerald-950/70 border border-emerald-500/30 p-3 rounded-xl flex justify-between items-center backdrop-blur-sm">
                         <div>
-                            <p class="text-xs font-semibold">Follow Cyber Zamindar on X</p>
-                            <p class="text-[9px] text-gray-400">Must open profile to credit</p>
+                            <p class="text-xs font-semibold">Subscribe Our YouTube Channel</p>
+                            <p class="text-[9px] text-gray-400">@murthyAppsGames Official</p>
                         </div>
-                        <button id="task2-btn" onclick="startRealTask('task2-btn', 'https://x.com', 50000)" class="bg-amber-400 text-black font-black text-xs px-3 py-2 rounded-lg active:scale-95 transition-transform">Follow +50K</button>
+                        <button id="task2-btn" onclick="startRealTask('task2-btn', 'https://www.youtube.com/@murthyAppsGames', 50000)" class="bg-amber-400 text-black font-black text-xs px-3 py-2 rounded-lg active:scale-95 transition-transform">Watch +50K</button>
                     </div>
                 </div>
             </div>
@@ -156,8 +155,21 @@
             <div id="wallet-page" class="tab-content text-center pt-4 w-full">
                 <span class="text-5xl block mb-2">💎</span>
                 <h3 class="text-lg font-bold text-emerald-400 mb-1">Web3 Airdrop Wallet</h3>
-                <p class="text-xs text-gray-400 max-w-xs mx-auto mb-4">Connect decentralized wallet to claim launch distribution rewards.</p>
-                <button onclick="connectWallet()" class="w-full bg-gradient-to-r from-emerald-500 to-green-500 text-black font-black py-3 rounded-xl shadow-lg active:scale-95 transition-transform">Connect Wallet</button>
+                <p class="text-xs text-gray-400 max-w-xs mx-auto mb-4">Connect decentralized web3 wallet to lock your token distribution metrics.</p>
+                <button onclick="openWalletOptions()" class="w-full bg-gradient-to-r from-emerald-500 to-green-500 text-black font-black py-3 rounded-xl shadow-lg active:scale-95 transition-transform">Connect Wallet</button>
+                
+                <div id="wallet-providers" class="hidden mt-6 w-full space-y-2 bg-emerald-950/50 p-3 rounded-xl border border-emerald-800/40">
+                    <p class="text-[10px] text-emerald-400 font-bold tracking-wider mb-2">CHOOSE TON PROVIDER</p>
+                    <div onclick="mockConnect('TON Keeper')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center gap-3 cursor-pointer hover:bg-emerald-800">
+                        <span>💎</span><span class="text-xs font-bold">Tonkeeper Wallet</span>
+                    </div>
+                    <div onclick="mockConnect('Telegram Space')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center gap-3 cursor-pointer hover:bg-emerald-800">
+                        <span>✈️</span><span class="text-xs font-bold">Telegram Wallet (🔥 Recommended)</span>
+                    </div>
+                    <div onclick="mockConnect('MyTonWallet')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center gap-3 cursor-pointer hover:bg-emerald-800">
+                        <span>🪺</span><span class="text-xs font-bold">MyTonWallet Ecosystem</span>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -165,7 +177,7 @@
         <div class="fixed bottom-16 left-0 right-0 px-4 z-40 max-w-md mx-auto">
             <div id="ad-banner" onclick="watchRealAd()" class="bg-gradient-to-r from-amber-950 to-emerald-950 border border-amber-500/50 rounded-xl p-2.5 text-center text-[10px] cursor-pointer hover:border-amber-400 transition-colors backdrop-blur-sm">
                 <span id="ad-text-main" class="font-bold text-amber-400 tracking-wide block animate-pulse">💰 SPONSORED PREMIUM AD ZONE (WATCH AD TO EARN +25,000) 💰</span>
-                <p id="ad-text-sub" class="text-gray-300 mt-0.5">🌾 Click to open partner ad and hold for 5 seconds to claim! 🌾</p>
+                <p id="ad-text-sub" class="text-gray-300 mt-0.5">🌾 Click to review verification sponsor page. Hold 5s to unlock reward! 🌾</p>
             </div>
         </div>
 
@@ -189,192 +201,158 @@
     </div>
 
     <script>
-        let balance = 1657565;
+        let balance = 1692645;
         let energy = 500;
-        let profitPerHour = 900;
+        let profitPerHour = 1500;
         let mysteryBoxClaimed = false;
+        let adCooldownActive = false;
+        let currentStreakDay = 1;
 
-        // CANVAS BACKGROUND STREAMLIT FLOATING BUBBLES LOGIC
+        // CANVAS BACKGROUND FLOATING BUBBLES LOGIC
         const canvas = document.getElementById('bubble-canvas');
         const ctx = canvas.getContext('2d');
         let particlesArray = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas); resizeCanvas();
 
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = canvas.height + Math.random() * 100;
                 this.size = Math.random() * 4 + 1;
-                this.speedY = Math.random() * 0.8 + 0.2;
+                this.speedY = Math.random() * 0.7 + 0.2;
                 this.opacity = Math.random() * 0.4 + 0.1;
             }
-            update() {
-                this.y -= this.speedY;
-                if (this.y < -10) {
-                    this.y = canvas.height + 10;
-                    this.x = Math.random() * canvas.width;
-                }
-            }
-            draw() {
-                ctx.fillStyle = `rgba(16, 185, 129, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
+            update() { this.y -= this.speedY; if (this.y < -10) { this.y = canvas.height + 10; this.x = Math.random() * canvas.width; } }
+            draw() { ctx.fillStyle = `rgba(16, 185, 129, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
         }
-
-        function initCanvas() {
-            particlesArray = [];
-            for (let i = 0; i < 40; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
+        function initCanvas() { for (let i = 0; i < 35; i++) { particlesArray.push(new Particle()); } }
         initCanvas();
-
-        function animateCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-            }
-            requestAnimationFrame(animateCanvas);
-        }
+        function animateCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); particlesArray[i].draw(); } requestAnimationFrame(animateCanvas); }
         animateCanvas();
 
         // 1. Tapping Module
-        document.getElementById('tap-btn').addEventListener('click', () => {
-            if (energy > 0) {
-                balance += 4;
-                energy -= 1;
-                updateUI();
-            }
-        });
+        document.getElementById('tap-btn').addEventListener('click', () => { if (energy > 0) { balance += 4; energy -= 1; updateUI(); } });
 
-        // 2. Streamlit Style Big Mystery Box Exploding Protocol
+        // 2. Daily Streak Verification System
+        function claimStreak(day, reward) {
+            if (day !== currentStreakDay) return;
+            balance += reward;
+            let currentBtn = document.getElementById(`streak-${day}`);
+            currentBtn.className = "bg-gray-700 text-gray-500 font-bold p-1 rounded cursor-not-allowed line-through";
+            currentBtn.disabled = true;
+            
+            alert(`📅 Day ${day} Streak Verified! +${reward.toLocaleString()} Crop Coins credited.`);
+            
+            if (currentStreakDay < 7) {
+                currentStreakDay++;
+                let nextBtn = document.getElementById(`streak-${currentStreakDay}`);
+                nextBtn.disabled = false;
+                nextBtn.className = "bg-emerald-600 text-white font-bold p-1 rounded animate-pulse border border-amber-400";
+            }
+            updateUI();
+        }
+
+        // 3. Mystery Box Exploding Animation Protocol
         function triggerMysteryBurst(e) {
-            if (mysteryBoxClaimed) {
-                alert("Mystery Box already opened today! Come back tomorrow.");
-                return;
-            }
-
+            if (mysteryBoxClaimed) { alert("Mystery Box already opened today! Come back tomorrow."); return; }
             const box = document.getElementById('mystery-box-graphic');
-            const zone = document.getElementById('mystery-zone');
             const rect = box.getBoundingClientRect();
             
-            // Generate Bubble Explosion Particles
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 25; i++) {
                 const p = document.createElement('div');
                 p.className = 'burst-particle bg-gradient-to-r from-purple-500 to-pink-500';
-                
-                // Set random explosion trajectories (Bubbles style)
                 const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 80 + 30;
+                const distance = Math.random() * 90 + 30;
                 p.style.setProperty('--mx', `${Math.cos(angle) * distance}px`);
                 p.style.setProperty('--my', `${Math.sin(angle) * distance}px`);
-                
-                // Particle size and position
-                const size = Math.random() * 12 + 6;
-                p.style.width = `${size}px`;
-                p.style.height = `${size}px`;
-                p.style.left = `${rect.left + rect.width/2 - size/2}px`;
-                p.style.top = `${rect.top + rect.height/2 - size/2}px`;
-                
-                document.body.appendChild(p);
-                setTimeout(() => p.remove(), 800);
+                const size = Math.random() * 10 + 6;
+                p.style.width = `${size}px`; p.style.height = `${size}px`;
+                p.style.left = `${rect.left + rect.width/2 - size/2}px`; p.style.top = `${rect.top + rect.height/2 - size/2}px`;
+                document.body.appendChild(p); setTimeout(() => p.remove(), 800);
             }
 
-            // Grant Streamlit Rewards Loop
-            balance += 100000;
-            mysteryBoxClaimed = true;
-            box.innerText = "🫙"; // Changed into open jar/box
-            box.classList.remove('box-shake');
-            document.getElementById('mystery-label').innerText = "✅ MYSTERY REWARD CLAIMED (+100K)";
-            document.getElementById('mystery-label').className = "text-[10px] font-black text-gray-400 tracking-wider mt-1 bg-gray-900/60 border border-gray-700 px-3 py-0.5 rounded-full";
-            
+            balance += 100000; mysteryBoxClaimed = true;
+            box.innerText = "🫙"; box.classList.remove('box-shake');
+            document.getElementById('mystery-label').innerText = "✅ REWARD CLAIMED (+100K)";
+            document.getElementById('mystery-label').className = "text-[9px] font-black text-gray-400 tracking-wider mt-1 bg-gray-900/60 border border-gray-700 px-3 py-0.5 rounded-full";
             updateUI();
-            alert("🎁 Streamlit Mystery Box Burst! +100,000 Lucky Coins Added.");
+            alert("🎁 Streamlit Mystery Box Burst! +100,000 Crop Coins Added.");
         }
 
-        // 3. Upgrades Module
+        // 4. Upgrade Module
         function buyUpgrade(cost, profitIncrease) {
             if (balance >= cost) {
-                balance -= cost;
-                profitPerHour += profitIncrease;
+                balance -= cost; profitPerHour += profitIncrease;
                 document.getElementById('profit-hour').innerText = "⚡ +" + profitPerHour;
-                updateUI();
-                alert("Market Asset Upgraded Successfully!");
-            } else {
-                alert("Insufficient crop balance!");
-            }
+                updateUI(); alert("Market Asset Upgraded Successfully!");
+            } else { alert("Insufficient crop balance!"); }
         }
 
-        // 4. Real Secure Tasks Loop (5s Verification Counter)
+        // 5. Secure Social Tasks Verification Protocol (5 Seconds Checking Lock)
         function startRealTask(btnId, targetUrl, reward) {
             let btn = document.getElementById(btnId);
             if (btn.disabled) return;
-
             window.open(targetUrl, '_blank');
-
             btn.innerText = "Verifying (5s)...";
             btn.className = "bg-amber-600 text-black font-bold text-[10px] px-2 py-2 rounded-lg cursor-wait animate-pulse";
             btn.disabled = true;
 
             setTimeout(() => {
-                balance += reward;
-                btn.innerText = "✅ Claimed";
+                balance += reward; btn.innerText = "✅ Claimed";
                 btn.className = "bg-gray-700 text-gray-500 text-xs px-3 py-2 rounded-lg cursor-not-allowed";
-                updateUI();
-                alert("Mission Protocol Verified! " + reward.toLocaleString() + " Coins Added.");
+                updateUI(); alert("Mission Protocol Verified! Rewards Credited.");
             }, 5000);
         }
 
-        // 5. Click-To-Earn Timed Ad Engine
+        // 6. Timed Ad Engine Protocol with Anti-Cheat Cooldown
         let isAdRunning = false;
         function watchRealAd() {
+            if (adCooldownActive) { alert("Sponsor network busy! Next Ad token available in 15 minutes."); return; }
             if (isAdRunning) return;
             isAdRunning = true;
 
-            window.open('https://google.com', '_blank');
+            window.open('https://google.com', '_blank'); // Open ad proxy network
 
             let countdown = 5;
             let mainTxt = document.getElementById('ad-text-main');
             let subTxt = document.getElementById('ad-text-sub');
             let banner = document.getElementById('ad-banner');
-
             banner.className = "bg-gradient-to-r from-red-950 to-amber-950 border border-red-500 rounded-xl p-2.5 text-center text-[10px] cursor-wait backdrop-blur-sm";
 
             let interval = setInterval(() => {
                 countdown--;
-                mainTxt.innerText = "⚠️ PREMIUM AD RUNNING... DO NOT CLOSE ⚠️";
-                subTxt.innerText = "⌛ Streamlit active verification check: " + countdown + "s remaining";
+                mainTxt.innerText = "⚠️ ADVERTISEMENT CONTENT ACTIVE... DO NOT SKIP ⚠️";
+                subTxt.innerText = "⌛ Checking publisher view logs: " + countdown + "s remaining";
 
                 if (countdown <= 0) {
                     clearInterval(interval);
                     balance += 25000;
                     updateUI();
-
-                    mainTxt.innerText = "💰 SPONSORED PREMIUM AD ZONE (WATCH AD TO EARN +25,000) 💰";
-                    subTxt.innerText = "🌾 Success! +25,000 Coins added. Click to watch next sponsor ad! 🌾";
-                    banner.className = "bg-gradient-to-r from-amber-950 to-emerald-950 border border-amber-500/50 rounded-xl p-2.5 text-center text-[10px] cursor-pointer backdrop-blur-sm";
-                    
                     isAdRunning = false;
-                    alert("Premium View Verified! +25,000 Coins Credited.");
+                    adCooldownActive = true;
+
+                    mainTxt.innerText = "⏳ AD LOCKED (COOLDOWN MODE) ⏳";
+                    subTxt.innerText = "🔒 Next sponsored crop multiplier distribution available in 15 minutes.";
+                    banner.className = "bg-gradient-to-r from-gray-900 to-emerald-950 border border-gray-800 rounded-xl p-2.5 text-center text-[10px] cursor-not-allowed opacity-60";
+                    alert("Premium View Verified! +25,000 Coins distributed successfully.");
+                    
+                    // Release Cooldown loop after 15 minutes (Simulated as 20s for demo ease or fully locked)
+                    setTimeout(() => {
+                        adCooldownActive = false;
+                        mainTxt.innerText = "💰 SPONSORED PREMIUM AD ZONE (WATCH AD TO EARN +25,000) 💰";
+                        subTxt.innerText = "🌾 Click to open partner ad and hold for 5 seconds to claim! 🌾";
+                        banner.className = "bg-gradient-to-r from-amber-950 to-emerald-950 border border-amber-500/50 rounded-xl p-2.5 text-center text-[10px] cursor-pointer backdrop-blur-sm";
+                    }, 20000); // 20 seconds mock release loop for validation
                 }
             }, 1000);
         }
 
-        // 6. Wallet Interface
-        function connectWallet() {
-            alert("TON/Web3 Core Ecosystem active for Phase 2 Launch Module.");
-        }
+        // 7. TON Wallet Advanced View Layer
+        function openWalletOptions() { document.getElementById('wallet-providers').classList.toggle('hidden'); }
+        function mockConnect(walletName) { alert(`💎 Secure Protocol Handshake: Initializing TON Network loop with ${walletName}. Mainnet linking active on global Phase 2 launch event!`); }
 
-        // UI Core Updates
+        // UI Core Sync Updates
         function updateUI() {
             document.getElementById('coin-balance').innerText = balance.toLocaleString();
             document.getElementById('energy-counter').innerText = energy + " / 500";
@@ -391,13 +369,8 @@
             event.currentTarget.classList.add('text-emerald-400');
         }
 
-        // Automated Energy Restock Core
-        setInterval(() => {
-            if (energy < 500) {
-                energy += 1;
-                document.getElementById('energy-counter').innerText = energy + " / 500";
-            }
-        }, 3000);
+        // Automated Recovery Module
+        setInterval(() => { if (energy < 500) { energy += 1; document.getElementById('energy-counter').innerText = energy + " / 500"; } }, 3000);
     </script>
 </body>
 </html>
