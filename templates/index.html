@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Village Mining AI - Launch Edition</title>
+    <title>Village Mining AI - Official Launch Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -42,8 +42,8 @@
                     </div>
                 </div>
                 <div class="text-right">
-                    <p class="text-[9px] text-gray-400">LAUNCH: OCT 2026</p>
-                    <p class="text-[11px] text-amber-400 font-bold">⏳ COMING SOON</p>
+                    <p class="text-[9px] text-gray-400">LAUNCH: NOV 2026</p>
+                    <p class="text-[11px] text-amber-400 font-bold">⏳ 151 DAYS LEFT</p>
                 </div>
             </div>
 
@@ -161,7 +161,7 @@
                 <div class="bg-amber-950/40 border border-amber-500/40 rounded-2xl p-4 max-w-sm mx-auto backdrop-blur-md">
                     <p class="text-sm font-bold text-white mb-2">🚀 Phase 2 Smart Contract Launch</p>
                     <p class="text-xs text-gray-300 leading-relaxed">
-                        TON Wallet Connection & On-Chain Airdrop Snapshot allocation rules are coming live in <span class="text-amber-400 font-black">October 2026</span>.
+                        TON Wallet Connection & On-Chain Snapshot configuration rules are coming live in <span class="text-amber-400 font-black">October 2026</span>.
                     </p>
                     <div class="mt-4 pt-3 border-t border-amber-500/20 text-[10px] text-emerald-400 font-bold">
                         🔒 KEEP MINING TO INCREASE YOUR ALLOCATION WEIGHT!
@@ -198,7 +198,6 @@
     </div>
 
     <script>
-        // Telegram Web App Handshake initialization
         if (window.Telegram && window.Telegram.WebApp) {
             window.Telegram.WebApp.ready();
             window.Telegram.WebApp.expand();
@@ -210,11 +209,9 @@
         let mysteryBoxClaimed = false;
         let adCooldownActive = false;
 
-        // STREAK LOCAL STORAGE ENGINE
         let currentStreakDay = parseInt(localStorage.getItem('v_streak_day')) || 1;
         let lastClaimTime = parseInt(localStorage.getItem('v_last_claim_time')) || 0;
 
-        // BUBBLE CANVAS BACKGROUND SYSTEM
         const canvas = document.getElementById('bubble-canvas');
         const ctx = canvas.getContext('2d');
         let particlesArray = [];
@@ -244,14 +241,12 @@
             updateUI();
         };
 
-        // 1. Tapping System
         document.getElementById('tap-btn').addEventListener('click', () => { if (energy > 0) { balance += 4; energy -= 1; updateUI(); } });
 
-        // 2. DYNAMIC UNIQUE REFERRAL GENERATOR FOR INDIVIDUAL USER SEPARATION
+        // DYNAMIC UNIQUE REFERRAL GENERATOR
         function copyReferralLink() {
             let uniqueUserId = localStorage.getItem('v_miner_unique_id');
             if (!uniqueUserId) {
-                // Fetch real live ID from Telegram if available, else build a secure random dynamic seed
                 if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user && window.Telegram.WebApp.initDataUnsafe.user.id) {
                     uniqueUserId = window.Telegram.WebApp.initDataUnsafe.user.id;
                 } else {
@@ -269,10 +264,10 @@
             });
         }
 
-        // 3. GENERATE DYNAMIC TOP 1 TO 50 LEADERBOARD MATRIX
+        // GENERATE TOP 1 TO 50 LEADERBOARD
         function generateLeaderboard() {
             const container = document.getElementById('leaderboard-list');
-            container.innerHTML = ""; // Clear
+            container.innerHTML = ""; 
             
             const premiumNames = [
                 "CryptoKisan_TG", "Anil_Crypto_King", "Suresh_Vijayawada", "Kiran_Guntur_Miner", "Web3_Palletooru",
@@ -291,7 +286,6 @@
             
             for (let i = 1; i <= 50; i++) {
                 startingPoints -= Math.floor(Math.random() * 1200000) + 300000;
-                
                 let medal = "🔹";
                 if (i === 1) medal = "🥇";
                 if (i === 2) medal = "🥈";
@@ -310,7 +304,7 @@
             }
         }
 
-        // 4. Streak Core
+        // Streak Core
         function setupStreakUI() {
             const now = Date.now();
             const timePassed = now - lastClaimTime;
@@ -386,7 +380,6 @@
             updateUI();
         }
 
-        // 5. Mystery Box Explosion Animation
         function triggerMysteryBurst(e) {
             if (mysteryBoxClaimed) { alert("Mystery Box already opened today! Come back tomorrow."); return; }
             const box = document.getElementById('mystery-box-graphic');
@@ -413,7 +406,6 @@
             alert("🎁 Mystery Box Burst! +100,000 Crop Coins Added.");
         }
 
-        // 6. Market Assets Engine
         function buyUpgrade(cost, profitIncrease) {
             if (balance >= cost) {
                 balance -= cost; profitPerHour += profitIncrease;
@@ -422,7 +414,6 @@
             } else { alert("Insufficient crop balance!"); }
         }
 
-        // 7. Premium Sponsored Ad Module
         function watchRealAd() {
             if (adCooldownActive) { alert("Sponsor network busy! Next ad available in 15 minutes."); return; }
             window.open('https://google.com', '_blank');
@@ -451,7 +442,7 @@
                         mainTxt.innerText = "💰 SPONSORED PREMIUM AD ZONE (WATCH AD TO EARN +25,000) 💰";
                         subTxt.innerText = "🌾 Click to open partner ad and hold for 5 seconds to claim! 🌾";
                         banner.className = "bg-gradient-to-r from-amber-950 to-emerald-950 border border-amber-500/50 rounded-xl p-2.5 text-center text-[10px] cursor-pointer backdrop-blur-sm";
-                    }, 900000); // 15 Minute Lockout
+                    }, 900000); 
                 }
             }, 1000);
         }
@@ -469,8 +460,6 @@
             document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('text-emerald-400'));
             event.currentTarget.classList.add('text-emerald-400');
         }
-        
-        // Energy Passive Regeneration loop
         setInterval(() => { if (energy < 500) { energy += 1; document.getElementById('energy-counter').innerText = energy + " / 500"; } }, 3000);
     </script>
 </body>
