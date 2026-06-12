@@ -42,8 +42,8 @@
                     </div>
                 </div>
                 <div class="text-right">
-                    <p class="text-[9px] text-gray-400">LAUNCH: NOV 2026</p>
-                    <p class="text-[11px] text-amber-400 font-bold">⏳ 151 DAYS LEFT</p>
+                    <p class="text-[9px] text-gray-400">LAUNCH: NOV 10, 2026</p>
+                    <p id="live-days-left" class="text-[11px] text-amber-400 font-bold animate-pulse">⏳ CALC DAYS...</p>
                 </div>
             </div>
 
@@ -238,12 +238,26 @@
             setupStreakUI();
             setInterval(checkStreakTimer, 1000);
             generateLeaderboard();
+            calculateLiveDays(); // Trigger automated calendar math layer
             updateUI();
         };
 
+        // NEW AUTOMATED LIVE DAYS MATH LAYER
+        function calculateLiveDays() {
+            const targetLaunchDate = new Date("November 10, 2026 00:00:00").getTime();
+            const currentLiveTime = Date.now();
+            const difference = targetLaunchDate - currentLiveTime;
+
+            let totalDaysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+            
+            // Fail-safe protection switch if target boundary passes
+            if (totalDaysLeft < 0) totalDaysLeft = 0;
+
+            document.getElementById('live-days-left').innerText = `⏳ ${totalDaysLeft} DAYS LEFT`;
+        }
+
         document.getElementById('tap-btn').addEventListener('click', () => { if (energy > 0) { balance += 4; energy -= 1; updateUI(); } });
 
-        // DYNAMIC UNIQUE REFERRAL GENERATOR
         function copyReferralLink() {
             let uniqueUserId = localStorage.getItem('v_miner_unique_id');
             if (!uniqueUserId) {
@@ -264,7 +278,6 @@
             });
         }
 
-        // GENERATE TOP 1 TO 50 LEADERBOARD
         function generateLeaderboard() {
             const container = document.getElementById('leaderboard-list');
             container.innerHTML = ""; 
@@ -304,7 +317,6 @@
             }
         }
 
-        // Streak Core
         function setupStreakUI() {
             const now = Date.now();
             const timePassed = now - lastClaimTime;
