@@ -103,6 +103,8 @@
                         <span class="text-5xl filter drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">🚜</span>
                     </button>
                 </div>
+                
+                <p class="text-[10px] font-bold text-emerald-400 tracking-widest mt-1">✨ TAP TRACTOR TO GET MORE POINTS ✨</p>
 
                 <div class="mt-3 flex flex-col items-center gap-2 w-full">
                     <div class="inline-flex items-center gap-2 bg-emerald-950/80 border border-emerald-500/30 px-4 py-1 rounded-full text-xs backdrop-blur-sm">
@@ -399,6 +401,7 @@
             updateUI(); alert("🎁 Mystery Box Added +100,000 Coins!");
         }
 
+        // Market Upgrades
         function buyUpgrade(cost, profitIncrease) {
             if (balance >= cost) {
                 balance -= cost; profitPerHour += profitIncrease;
@@ -406,6 +409,7 @@
             } else { alert("Insufficient coins!"); }
         }
 
+        // Tasks Verification
         function startRealTask(btnId, targetUrl, reward) {
             let btn = document.getElementById(btnId);
             if (btn.disabled) return;
@@ -420,6 +424,7 @@
             }, 5000);
         }
 
+        // Ads System Core
         function watchRealAd() {
             if (adCooldownActive) { alert("Sponsor busy! Wait 15 mins."); return; }
             window.open('https://google.com', '_blank');
