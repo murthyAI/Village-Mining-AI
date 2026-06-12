@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Village Mining AI - Master Launch Edition</title>
+    <title>Village Mining AI - Launch Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -21,7 +21,7 @@
         .box-shake { animation: shake 0.6s ease-in-out infinite alternate; }
         .burst-particle { position: absolute; pointer-events: none; border-radius: 50%; animation: explode 0.8s ease-out forwards; }
         @keyframes explode {
-            0 { transform: translate(0, 0) scale(1); opacity: 1; }
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
             100% { transform: translate(var(--mx), var(--my)) scale(0.2); opacity: 0; }
         }
     </style>
@@ -42,8 +42,8 @@
                     </div>
                 </div>
                 <div class="text-right">
-                    <p class="text-[9px] text-gray-400">LAUNCH: NOV 10, 2026</p>
-                    <p class="text-[11px] text-amber-400 font-bold">⏳ 151 DAYS LEFT</p>
+                    <p class="text-[9px] text-gray-400">LAUNCH: OCT 2026</p>
+                    <p class="text-[11px] text-amber-400 font-bold">⏳ COMING SOON</p>
                 </div>
             </div>
 
@@ -66,7 +66,6 @@
         <div class="flex-grow w-full max-w-md mx-auto px-4 overflow-y-auto mb-2 relative">
             
             <div id="tap-page" class="tab-content active text-center pt-1">
-                
                 <div class="w-full bg-emerald-950/80 border border-emerald-500/40 p-2 rounded-xl mb-3 backdrop-blur-sm">
                     <p class="text-[10px] font-bold text-amber-400 mb-1 flex items-center justify-center gap-1">📅 DAILY STREAK SYSTEM (24H LOCK)</p>
                     <p id="streak-timer-text" class="text-[9px] text-gray-400 mb-1.5 font-semibold"></p>
@@ -112,7 +111,7 @@
                     </div>
                     
                     <button onclick="copyReferralLink()" class="w-full max-w-xs bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-md border border-purple-400/40 flex items-center justify-center gap-2 active:scale-95 transition-all mt-1">
-                        <span>🔗</span><span>INVITE FRIENDS & EARN +50K</span>
+                        <span>🔗</span><span>COPY YOUR PERSONAL REFERRAL LINK</span>
                     </button>
                 </div>
             </div>
@@ -139,42 +138,33 @@
             </div>
 
             <div id="tasks-page" class="tab-content text-center pt-4 w-full">
-                <h3 class="text-lg font-bold text-emerald-400 mb-1">📋 Bonus Missions</h3>
-                <p class="text-[11px] text-gray-400 mb-4">Join official channels and verify views to earn</p>
-                <div class="space-y-3 text-left w-full">
-                    <div class="bg-emerald-950/70 border border-emerald-500/30 p-3 rounded-xl flex justify-between items-center backdrop-blur-sm">
-                        <div>
-                            <p class="text-xs font-semibold">Join Our Telegram Channel</p>
-                            <p class="text-[9px] text-gray-400">@murthy Apps & Games</p>
-                        </div>
-                        <button id="task1-btn" onclick="startRealTask('task1-btn', 'https://t.me/murthy_Apps_Games', 100000)" class="bg-amber-400 text-black font-black text-xs px-3 py-2 rounded-lg active:scale-95 transition-transform">Join +100K</button>
+                <h3 class="text-lg font-bold text-amber-400 mb-1">🏆 Village AI Leaderboard</h3>
+                <p class="text-[11px] text-gray-400 mb-3">Top 50 Farmers Global Metrics</p>
+                
+                <div class="w-full bg-gradient-to-r from-amber-500/20 to-emerald-500/20 border border-amber-500/40 p-2.5 rounded-xl flex justify-between items-center mb-3 backdrop-blur-md">
+                    <div class="flex items-center gap-2">
+                        <span class="text-base">⭐</span>
+                        <span class="text-xs font-bold text-white">Murthy_Grand_Tycoon (You)</span>
                     </div>
-                    <div class="bg-emerald-950/70 border border-emerald-500/30 p-3 rounded-xl flex justify-between items-center backdrop-blur-sm">
-                        <div>
-                            <p class="text-xs font-semibold">Subscribe Our YouTube Channel</p>
-                            <p class="text-[9px] text-gray-400">@murthyAppsGames Official</p>
-                        </div>
-                        <button id="task2-btn" onclick="startRealTask('task2-btn', 'https://www.youtube.com/@murthyAppsGames', 50000)" class="bg-amber-400 text-black font-black text-xs px-3 py-2 rounded-lg active:scale-95 transition-transform">Watch +50K</button>
-                    </div>
+                    <span class="text-xs font-black text-amber-400">Rank #2,481</span>
                 </div>
+
+                <div id="leaderboard-list" class="w-full space-y-1.5 max-h-[320px] overflow-y-auto pr-1 text-left bg-emerald-950/40 p-2 rounded-xl border border-emerald-900/60">
+                    </div>
             </div>
 
-            <div id="wallet-page" class="tab-content text-center pt-4 w-full">
-                <span class="text-5xl block mb-2">💎</span>
-                <h3 class="text-lg font-bold text-emerald-400 mb-1">Web3 Airdrop Wallet</h3>
-                <p class="text-xs text-gray-400 max-w-xs mx-auto mb-4">Connect decentralized web3 wallet to lock your token distribution metrics.</p>
-                
-                <button id="main-wallet-btn" onclick="openWalletOptions()" class="w-full bg-gradient-to-r from-emerald-500 to-green-500 text-black font-black py-3 rounded-xl shadow-lg active:scale-95 transition-transform">Connect Wallet</button>
-                
-                <div id="wallet-providers" class="hidden mt-6 w-full space-y-2 bg-emerald-950/50 p-3 rounded-xl border border-emerald-800/40">
-                    <p class="text-[10px] text-emerald-400 font-bold tracking-wider mb-2">CHOOSE TON PROVIDER</p>
-                    <div onclick="mockConnect('Tonkeeper')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center justify-between cursor-pointer hover:bg-emerald-800">
-                        <div class="flex items-center gap-3"><span>💎</span><span id="label-Tonkeeper" class="text-xs font-bold">Tonkeeper Wallet</span></div>
-                        <span id="status-Tonkeeper" class="text-[10px] text-gray-400">Disconnected</span>
-                    </div>
-                    <div onclick="mockConnect('Telegram Wallet')" class="p-2.5 bg-emerald-900/60 rounded-lg border border-emerald-700/30 flex items-center justify-between cursor-pointer hover:bg-emerald-800">
-                        <div class="flex items-center gap-3"><span>✈️</span><span id="label-Telegram-Wallet" class="text-xs font-bold">Telegram Wallet</span></div>
-                        <span id="status-Telegram-Wallet" class="text-[10px] text-gray-400">Disconnected</span>
+            <div id="wallet-page" class="tab-content text-center pt-6 w-full">
+                <div class="w-16 h-16 bg-amber-500/10 border-2 border-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+                    <span class="text-3xl">💎</span>
+                </div>
+                <h3 class="text-xl font-black text-amber-400 mb-2">Web3 Wallet Integration</h3>
+                <div class="bg-amber-950/40 border border-amber-500/40 rounded-2xl p-4 max-w-sm mx-auto backdrop-blur-md">
+                    <p class="text-sm font-bold text-white mb-2">🚀 Phase 2 Smart Contract Launch</p>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        TON Wallet Connection & On-Chain Airdrop Snapshot allocation rules are coming live in <span class="text-amber-400 font-black">October 2026</span>.
+                    </p>
+                    <div class="mt-4 pt-3 border-t border-amber-500/20 text-[10px] text-emerald-400 font-bold">
+                        🔒 KEEP MINING TO INCREASE YOUR ALLOCATION WEIGHT!
                     </div>
                 </div>
             </div>
@@ -197,7 +187,7 @@
                     <span class="text-lg">⛏️</span><span>Mine</span>
                 </button>
                 <button onclick="switchTab('tasks-page')" class="nav-tab flex flex-col items-center gap-1 hover:text-white">
-                    <span class="text-lg">📋</span><span>Tasks</span>
+                    <span class="text-lg">🏆</span><span>Leaderboard</span>
                 </button>
                 <button onclick="switchTab('wallet-page')" class="nav-tab flex flex-col items-center gap-1 hover:text-white">
                     <span class="text-lg">💰</span><span>Wallet</span>
@@ -250,41 +240,77 @@
         window.onload = function() {
             setupStreakUI();
             setInterval(checkStreakTimer, 1000);
-            
-            // Restore wallet state if connected before
-            let savedWallet = localStorage.getItem('v_connected_wallet');
-            if (savedWallet) {
-                applyWalletConnectedUI(savedWallet);
-            }
+            generateLeaderboard();
             updateUI();
         };
 
         // 1. Tapping System
         document.getElementById('tap-btn').addEventListener('click', () => { if (energy > 0) { balance += 4; energy -= 1; updateUI(); } });
 
-        // 2. NEW DYNAMIC REFERRAL GENERATOR WITH REAL-TIME TG USER IDS
+        // 2. DYNAMIC UNIQUE REFERRAL GENERATOR FOR INDIVIDUAL USER SEPARATION
         function copyReferralLink() {
-            let telegramUserId = "Guest_" + Math.floor(100000 + Math.random() * 900000);
-            
-            // Pull real live ID from Telegram Environment if available
-            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
-                if (window.Telegram.WebApp.initDataUnsafe.user.id) {
-                    telegramUserId = window.Telegram.WebApp.initDataUnsafe.user.id;
+            let uniqueUserId = localStorage.getItem('v_miner_unique_id');
+            if (!uniqueUserId) {
+                // Fetch real live ID from Telegram if available, else build a secure random dynamic seed
+                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user && window.Telegram.WebApp.initDataUnsafe.user.id) {
+                    uniqueUserId = window.Telegram.WebApp.initDataUnsafe.user.id;
+                } else {
+                    uniqueUserId = Math.floor(10000000 + Math.random() * 89999999).toString();
                 }
+                localStorage.setItem('v_miner_unique_id', uniqueUserId);
             }
 
-            // Clean custom referral structure bound to your bot username
-            const uniqueInviteLink = `https://t.me/VillageMiningAIBot?start=ref_${telegramUserId}`;
+            const personalInviteLink = `https://t.me/VillageMiningAIBot?start=ref_${uniqueUserId}`;
             
-            navigator.clipboard.writeText(uniqueInviteLink).then(() => {
-                alert(`🔗 Unique Link Copied For You!\n\n${uniqueInviteLink}\n\nShare this link. When your friends join, you will automatically receive +50,000 Crop Coins!`);
+            navigator.clipboard.writeText(personalInviteLink).then(() => {
+                alert(`🔗 Personal Referral Link Copied!\n\n${personalInviteLink}\n\nForward this to your friends. When they join, your specific ID will track the bonus points!`);
             }).catch(err => {
-                // Fail-safe copy protocol
-                alert(`Your invite link is: ${uniqueInviteLink}`);
+                alert(`Your invite link is: ${personalInviteLink}`);
             });
         }
 
-        // 3. Streak Core
+        // 3. GENERATE DYNAMIC TOP 1 TO 50 LEADERBOARD MATRIX
+        function generateLeaderboard() {
+            const container = document.getElementById('leaderboard-list');
+            container.innerHTML = ""; // Clear
+            
+            const premiumNames = [
+                "CryptoKisan_TG", "Anil_Crypto_King", "Suresh_Vijayawada", "Kiran_Guntur_Miner", "Web3_Palletooru",
+                "Ravi_Teja_Ton", "NTR_Fan_Crypto", "Pawan_Kalyan_Army", "Prabhas_Rebel_Web3", "Mahesh_Babu_Fans",
+                "Crypto_Chowdary", "Reddy_Gari_Tractor", "Naidu_Web3_Guru", "Smart_Farmer_Ram", "Village_Techie",
+                "Vizag_Beach_Miner", "Tirupati_Balaji_Coin", "Nellore_Chepala_Pulusu", "Kurnool_Kondareddy", "Warangal_Fort_AI",
+                "Nizamabad_Gold", "Khammam_Tractor_Rider", "Karimnagar_Diamond", "Cyber_Raju", "Telugu_Crypto_Guy",
+                "Airdrop_Hunter_99", "Tonkeeper_Sreenu", "Vasco_Da_Gama_TG", "Mining_Tigress", "Queen_Of_Village",
+                "Godavari_Prasadu", "Krishna_Delta_Farmer", "Rayalaseema_Seenu", "Uttarandhra_Bidda", "Hyderabad_Nawab_AI",
+                "Secunderabad_Miner", "Gachibowli_Tech_King", "HiTech_City_Zamindar", "Charminar_Chai_Coin", "Golconda_Fort_33",
+                "Siddipet_Srinivas", "Medak_Church_Web3", "Nalgonda_Farmer_Pro", "Mahbubnagar_Palamuru", "Adilabad_Forest_Miner",
+                "Amaravathi_Capital", "Vijayawada_Bullet_Rider", "Eluru_Smart_Grower", "Ongole_Gitta_Web3", "Kakinada_Kaja_Lover"
+            ];
+
+            let startingPoints = 84521000;
+            
+            for (let i = 1; i <= 50; i++) {
+                startingPoints -= Math.floor(Math.random() * 1200000) + 300000;
+                
+                let medal = "🔹";
+                if (i === 1) medal = "🥇";
+                if (i === 2) medal = "🥈";
+                if (i === 3) medal = "🥉";
+
+                const row = document.createElement('div');
+                row.className = "flex justify-between items-center p-2 rounded-lg bg-emerald-950/60 border border-emerald-900/40 text-[11px]";
+                row.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="w-5 text-center font-bold text-gray-400">${medal === "🔹" ? i : medal}</span>
+                        <span class="font-semibold text-gray-200">@${premiumNames[i-1]}</span>
+                    </div>
+                    <span class="font-bold text-emerald-400">🪙 ${startingPoints.toLocaleString()}</span>
+                `;
+                container.appendChild(row);
+            }
+        }
+
+        // 4. Streak Core
         function setupStreakUI() {
             const now = Date.now();
             const timePassed = now - lastClaimTime;
@@ -360,7 +386,7 @@
             updateUI();
         }
 
-        // 4. Mystery Box Explosion Animation
+        // 5. Mystery Box Explosion Animation
         function triggerMysteryBurst(e) {
             if (mysteryBoxClaimed) { alert("Mystery Box already opened today! Come back tomorrow."); return; }
             const box = document.getElementById('mystery-box-graphic');
@@ -387,29 +413,13 @@
             alert("🎁 Mystery Box Burst! +100,000 Crop Coins Added.");
         }
 
-        // 5. Market Assets Engine
+        // 6. Market Assets Engine
         function buyUpgrade(cost, profitIncrease) {
             if (balance >= cost) {
                 balance -= cost; profitPerHour += profitIncrease;
                 document.getElementById('profit-hour').innerText = "⚡ +" + profitPerHour;
                 updateUI(); alert("Equipment upgraded successfully!");
             } else { alert("Insufficient crop balance!"); }
-        }
-
-        // 6. Mission Tasks Verification
-        function startRealTask(btnId, targetUrl, reward) {
-            let btn = document.getElementById(btnId);
-            if (btn.disabled) return;
-            window.open(targetUrl, '_blank');
-            btn.innerText = "Verifying (5s)...";
-            btn.className = "bg-amber-600 text-black font-bold text-[10px] px-2 py-2 rounded-lg cursor-wait animate-pulse";
-            btn.disabled = true;
-
-            setTimeout(() => {
-                balance += reward; btn.innerText = "✅ Claimed";
-                btn.className = "bg-gray-700 text-gray-500 text-xs px-3 py-2 rounded-lg cursor-not-allowed";
-                updateUI(); alert("Task verified successfully! Rewards credited.");
-            }, 5000);
         }
 
         // 7. Premium Sponsored Ad Module
@@ -444,50 +454,6 @@
                     }, 900000); // 15 Minute Lockout
                 }
             }, 1000);
-        }
-
-        // 8. HIGH QUALITY PERSISTENT WALLET CONNECTION HANDLING
-        function openWalletOptions() { 
-            document.getElementById('wallet-providers').classList.toggle('hidden'); 
-        }
-
-        function mockConnect(walletName) {
-            alert(`💎 Requesting Secure Protocol Handshake with ${walletName}...`);
-            
-            // Save state to local storage to persist across reloads
-            localStorage.setItem('v_connected_wallet', walletName);
-            
-            // Instantly apply UI modifications live on the screen
-            applyWalletConnectedUI(walletName);
-            
-            // Hide the drawer smoothly
-            setTimeout(() => {
-                document.getElementById('wallet-providers').classList.add('hidden');
-            }, 600);
-        }
-
-        function applyWalletConnectedUI(walletName) {
-            // Generate a secure mock address sequence like true TON addresses
-            const mockAddress = "EQB" + Math.random().toString(36).substring(2, 6).toUpperCase() + "..." + Math.random().toString(36).substring(2, 5).toLowerCase() + "7x9";
-            
-            // Update Main Wallet Button Text and Colors to show active persistent link
-            const mainBtn = document.getElementById('main-wallet-btn');
-            mainBtn.innerText = `✅ Connected: ${walletName} (${mockAddress})`;
-            mainBtn.className = "w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black py-3 rounded-xl shadow-lg border border-blue-400/40 cursor-default";
-            mainBtn.onclick = null; // Lock button to prevent repetitive triggers
-
-            // Update specific list text fields inside the drawer element
-            if(walletName === 'Tonkeeper') {
-                document.getElementById('status-Tonkeeper').innerText = "Active Link";
-                document.getElementById('status-Tonkeeper').className = "text-[10px] text-green-400 font-bold";
-                document.getElementById('status-Telegram-Wallet').innerText = "Disconnected";
-                document.getElementById('status-Telegram-Wallet').className = "text-[10px] text-gray-500";
-            } else {
-                document.getElementById('status-Telegram-Wallet').innerText = "Active Link";
-                document.getElementById('status-Telegram-Wallet').className = "text-[10px] text-green-400 font-bold";
-                document.getElementById('status-Tonkeeper').innerText = "Disconnected";
-                document.getElementById('status-Tonkeeper').className = "text-[10px] text-gray-500";
-            }
         }
 
         function updateUI() {
