@@ -9,7 +9,7 @@
     <style>
         body { background-color: #031408; font-family: sans-serif; overflow: hidden; height: 100vh; width: 100vw; }
         .neon-glow { box-shadow: 0 0 20px #10b981; }
-        .tab-content { display: none; height: 100%; width: 100%; overflow-y: auto; padding-bottom: 120px; }
+        .tab-content { display: none; height: 100%; width: 100%; overflow-y: auto; padding-bottom: 140px; }
         .tab-content.active { display: flex; flex-direction: column; align-items: center; }
         #bubble-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .app-container { z-index: 10; position: relative; height: 100vh; width: 100%; display: flex; flex-direction: column; }
@@ -32,7 +32,7 @@
 
     <div class="app-container">
         
-        <div class="p-3 w-full max-w-md mx-auto shrink-0">
+        <div class="p-3 w-full max-w-md mx-auto shrink-0 relative">
             <div class="bg-emerald-950/70 border border-emerald-500/40 rounded-2xl p-2.5 flex justify-between items-center mb-2 backdrop-blur-md">
                 <div class="flex items-center gap-2">
                     <span class="text-2xl">🤠</span>
@@ -41,6 +41,7 @@
                         <p id="user-live-title" class="text-[9px] text-gray-400">PALEKAPU</p>
                     </div>
                 </div>
+
                 <div class="text-right">
                     <p class="text-[8px] text-gray-400">LAUNCH: NOV 10, 2026</p>
                     <p id="live-days-left" class="text-[10px] text-amber-400 font-bold animate-pulse">⏳ CALC DAYS...</p>
@@ -171,16 +172,17 @@
                     <span id="user-live-rank" class="text-xs font-black text-amber-400">Rank #2,481</span>
                 </div>
 
-                <div id="leaderboard-list" class="w-full space-y-1 max-h-[260px] overflow-y-auto pr-1 text-left bg-emerald-950/40 p-1.5 rounded-xl border border-emerald-900/60">
+                <div id="leaderboard-list" class="w-full space-y-1 max-h-[220px] overflow-y-auto pr-1 text-left bg-emerald-950/40 p-1.5 rounded-xl border border-emerald-900/60">
                     </div>
             </div>
 
             <div id="wallet-page" class="tab-content text-center pt-6 w-full">
-                <div class="w-12 h-16 bg-amber-500/10 border-2 border-amber-500 rounded-full flex items-center justify-center mx-auto mb-3 animate-bounce">
+                <div class="w-12 h-12 bg-amber-500/10 border-2 border-amber-500 rounded-full flex items-center justify-center mx-auto mb-3 animate-bounce">
                     <span class="text-2xl">💎</span>
                 </div>
                 <h3 class="text-base font-black text-amber-400 mb-1">Web3 Wallet Integration</h3>
-                <div class="bg-amber-950/40 border border-amber-500/40 rounded-2xl p-3 max-w-sm mx-auto backdrop-blur-md">
+                
+                <div class="bg-amber-950/40 border border-amber-500/40 rounded-2xl p-3 max-w-sm mx-auto backdrop-blur-md mb-3">
                     <p class="text-xs font-bold text-white mb-1">🚀 Phase 2 Smart Contract Launch</p>
                     <p class="text-[11px] text-gray-300 leading-relaxed">
                         TON Wallet Connection & On-Chain Snapshot configuration rules are coming live in <span class="text-amber-400 font-black">October 2026</span>.
@@ -189,8 +191,40 @@
                         🔒 KEEP MINING TO INCREASE YOUR ALLOCATION WEIGHT!
                     </div>
                 </div>
+
+                <button onclick="toggleWhitePaper(true)" class="bg-emerald-900/90 hover:bg-emerald-800 border-2 border-emerald-500/40 text-[11px] font-bold px-4 py-2 rounded-xl text-amber-300 active:scale-95 transition-transform flex items-center gap-1.5 mx-auto shadow-lg">
+                    <span>📄</span> Official White Paper
+                </button>
             </div>
 
+        </div>
+
+        <div id="whitepaper-modal" class="fixed inset-0 bg-black/90 z-[100] hidden flex-col items-center justify-center p-4 backdrop-blur-md">
+            <div class="bg-emerald-950 border-2 border-emerald-500 rounded-2xl p-4 w-full max-w-md max-h-[80vh] flex flex-col relative">
+                <button onclick="toggleWhitePaper(false)" class="absolute top-3 right-3 text-gray-400 hover:text-white font-black text-xs bg-emerald-900 px-2 py-0.5 rounded-full">✕ CLOSE</button>
+                
+                <h3 class="text-sm font-bold text-emerald-400 mb-1 text-center">📄 Project White Paper v1.0</h3>
+                <p class="text-[9px] text-gray-400 mb-3 text-center">Official System Documentation & Architecture</p>
+
+                <div class="overflow-y-auto space-y-3 text-left pr-1 text-xs">
+                    <div class="bg-emerald-900/40 border border-emerald-800/60 p-2.5 rounded-xl">
+                        <h4 class="font-bold text-amber-400 text-[11px] mb-0.5">🌾 1. Project Vision</h4>
+                        <p class="text-[10px] text-gray-300 leading-relaxed">Village Mining AI is a gamified simulation environment built on top of the TON ecosystem. We merge traditional rural dynamics with modern crypto frameworks, ensuring a 100% free structural distribution strategy.</p>
+                    </div>
+                    <div class="bg-emerald-900/40 border border-emerald-800/60 p-2.5 rounded-xl">
+                        <h4 class="font-bold text-amber-400 text-[11px] mb-0.5">📅 2. Ecosystem Roadmap</h4>
+                        <ul class="text-[10px] text-gray-300 space-y-0.5 list-disc pl-4">
+                            <li><span class="text-emerald-400 font-bold">Phase 1:</span> Fair-launch mining & community building via micro-nodes.</li>
+                            <li><span class="text-emerald-400 font-bold">Phase 2 (Oct 2026):</span> Smart contract verification and non-custodial TON wallet connection frameworks.</li>
+                            <li><span class="text-emerald-400 font-bold">Phase 3 (Nov 2026):</span> Ecosystem balance snapshotting & global Token Distribution Event (TGE).</li>
+                        </ul>
+                    </div>
+                    <div class="bg-emerald-900/40 border border-emerald-800/60 p-2.5 rounded-xl">
+                        <h4 class="font-bold text-amber-400 text-[11px] mb-0.5">🛡️ 3. Zero-Deposit Guarantee</h4>
+                        <p class="text-[10px] text-gray-300 leading-relaxed">To offer bulletproof data security, our platform rejects active deposit nodes. Users will never be requested to load gas money or send funds to access their normal earned allocation weight.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="fixed bottom-14 left-0 right-0 px-4 z-40 max-w-md mx-auto">
@@ -228,7 +262,6 @@
             window.Telegram.WebApp.expand();
         }
 
-        // INITIALIZE ALL COMPONENT STATES Organically
         let balance = parseInt(localStorage.getItem('v_user_balance')) || 0;
         let energy = parseInt(localStorage.getItem('v_user_energy')) || 500;
         let profitPerHour = parseInt(localStorage.getItem('v_user_pph')) || 0;
@@ -269,6 +302,12 @@
             calculateLiveDays();
             updateUI();
         };
+
+        function toggleWhitePaper(show) {
+            const modal = document.getElementById('whitepaper-modal');
+            if (show) modal.classList.remove('hidden');
+            else modal.classList.add('hidden');
+        }
 
         function calculateLiveDays() {
             const targetLaunchDate = new Date("November 10, 2026 00:00:00").getTime();
@@ -488,7 +527,7 @@
 
             let percentage = Math.min((balance / targetPoints) * 100, 100);
             document.getElementById('rank-bar').style.width = percentage + "%";
-
+            
             if (balance > 100000) document.getElementById('user-live-rank').innerText = "Rank #1,102";
             if (balance > 500000) document.getElementById('user-live-rank').innerText = "Rank #542";
             if (balance > 1500000) document.getElementById('user-live-rank').innerText = "Rank #82";
